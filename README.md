@@ -1,9 +1,11 @@
 # PROJETO INTEGRADOR NEGRA VISÃO
 
 ## Integrantes
-- Nome 1
-- Nome 2
-- Nome 3
+- BRUNO ALMEIDA
+- IGOR BARBOSA
+- LUIZA KOVACS
+- MARISOL SAWAYA
+- VICTOR LYAN
 
 ## Objetivo
 Descrição do sistema.
