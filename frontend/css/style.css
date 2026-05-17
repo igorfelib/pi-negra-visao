@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap');
+
+:root {
+  --vermelho: #c22e2e;
+  --amarelo: #ffb906;
+  /* --amarelo: #ffd700; */
+  --preto: #2c1a1d;
+  --verde: #223127;
+  --bg: #e5d9c1;
+  --bg-card-claro: var(--bg);
+  --bg-card-escuro: var(--preto);
+  --border: 0.3rem solid var(--preto);
+}
+
+* {
+  font-family: inter, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* border: none; */
+  text-decoration: none;
+  transition: 0.2s linear;
+}
+
+html {
+  font-size: 80%;
+  overflow-x: hidden;
+  scroll-padding-top: 9rem;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+}
+
+a img {
+  width: 100px;
+}
+
+svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 7%;
+  border-bottom: var(--border);
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
