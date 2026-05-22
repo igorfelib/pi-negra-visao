@@ -179,70 +179,73 @@ footer * {
   flex-direction: column;
   align-items: center;
 }
-main {
-    padding: 20px;
-    background-color: white;
-    max-width: 10000px;
 
-}
-section
-{ margin-top: 40 px;
-padding: 10px;
+/* ===== EVENTOS ===== */
+section {
+  margin-top: 40 px;
+  padding: 10px;
 }
 h2 {
-    font-weight: bold;
-    color: #4F3F38;
-    justify-content: center;
-    display: flex;
-    font-size: 50px;
-    padding: none;
+  font-weight: bold;
+  color: #4f3f38;
+  justify-content: center;
+  display: flex;
+  font-size: 50px;
+  padding: none;
 }
 section h3 {
-    color: #451423; 
-    
+  color: #451423;
 }
 article {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+main {
+  background-color: rgba(217, 219, 210, 0.418);
 }
 .card-eventos {
   display: flex;
-    flex-direction: column;
-    width: calc(33.33% - 20px);
-    border-radius: 8px;
-    background-color: white;
-    justify-content: center;
-
+  flex-direction: column;
+  width: calc(33.33% - 20px);
+  border-radius: 8px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 0 1px #e2e2e6;
 }
-.card-eventos img{
-    width: 100%;
-    height: 200px;
+.card-eventos img {
+  width: 80%;
+  height: 200px;
 }
-.card-eventos p{
-    padding: 10px;
-    text-align: justify;
-    text-align: center;
-    color: #451423;
-    font-weight: bold;
+.card-eventos p {
+  padding: 10px;
+  text-align: justify;
+  text-align: center;
+  color: #451423;
+  font-weight: bold;
 }
-.card-eventos h3{
-    text-align: center;
+.card-eventos h3 {
+  text-align: center;
+  padding: 10px;
 }
-.card-eventos:hover{
-    transform: scale(1.02);
-    box-shadow: 0 0 0 3px #e2e2e6;
-} 
-.card-eventos button{
-    background-color: #C5A785;
-    color: black;
+.card-eventos:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px #e2e2e6;
+}
+.card-eventos button {
+  background-color: #c5a785;
+  color: black;
   padding: 10px 20px;
   border-radius: 10px;
-  gap: 20px; 
+  gap: 20px;
 }
-@media (max-width: 768px){ /*para tela se ajustar a telas menores (responsível)*/
-    .card-eventos{
-        width: 100%
-    }
+@media (max-width: 768px) {
+  /*para tela se ajustar a telas menores (responsível)*/
+  .card-eventos {
+    width: 100%;
+  }
 }
