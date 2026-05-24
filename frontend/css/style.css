@@ -1,0 +1,251 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap");
+
+:root {
+  --vermelho: #c22e2e;
+  --amarelo: #ffb906;
+  /* --amarelo: #ffd700; */
+  --preto: #2c1a1d;
+  --verde: #223127;
+  --bg: #e5d9c1;
+  --bg-card-claro: var(--bg);
+  --bg-card-escuro: var(--preto);
+  --border: 0.3rem solid var(--preto);
+}
+
+* {
+  font-family: inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* border: none; */
+  text-decoration: none;
+  transition: 0.2s linear;
+}
+
+html {
+  font-size: 80%;
+  overflow-x: hidden;
+  scroll-padding-top: 9rem;
+  scroll-behavior: smooth;
+}
+
+a img {
+  width: 100px;
+}
+
+svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ===== HEADER ===== */
+#header {
+  background: var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 7%;
+  border-bottom: var(--border);
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  padding: 0.1em 1em;
+}
+
+nav ul li a {
+  color: var(--preto);
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+#card-logo {
+  display: flex;
+  align-items: center;
+}
+
+#card-logo span {
+  padding-left: 2em;
+  font-size: 3em;
+  font-family: "Space Grotesk", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 1000;
+}
+
+#linha-nav {
+  width: 100%;
+  height: 0.3rem;
+  background: var(--amarelo);
+}
+/* ===== MAIN ===== */
+.card-formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: var(--border);
+  width: 50%;
+  margin: 3rem auto;
+  padding: 2rem;
+}
+
+.alerta-obrigatorio {
+  display: none;
+  color: var(--vermelho);
+}
+
+.card-formulario h1 {
+  font-size: 2.5em;
+  align-self: flex-start;
+}
+.card-formulario p {
+  align-self: flex-start;
+  margin-bottom: 1.5em;
+}
+
+.linha-formulario {
+  display: flex;
+}
+.campo-formulario {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.campo-formulario input,
+.campo-formulario select {
+  padding: 0.5em;
+  margin: 0.5em 0.5em 0.5em 0;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border: 2px solid var(--amarelo);
+}
+
+input::placeholder,
+select:invalid {
+  color: gray;
+}
+
+select option {
+  color: #000;
+}
+
+#buttonInscrever {
+  background: var(--verde);
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  font-size: 1.2em;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 1.2em 0;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--bg-card-escuro);
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+footer * {
+  color: var(--bg-card-claro);
+}
+#footer-alto {
+  border-top: var(--border);
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+}
+#footer-baixo {
+  text-align: center;
+}
+.footer-container {
+  width: 30%;
+}
+.footer-container-social {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== EVENTOS ===== */
+section {
+  margin-top: 40 px;
+  padding: 10px;
+}
+h2 {
+  font-weight: bold;
+  color: #4f3f38;
+  justify-content: center;
+  display: flex;
+  font-size: 50px;
+  padding: none;
+}
+section h3 {
+  color: #451423;
+}
+article {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+main {
+  background-color: rgba(217, 219, 210, 0.418);
+}
+.card-eventos {
+  display: flex;
+  flex-direction: column;
+  width: calc(33.33% - 20px);
+  border-radius: 8px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 0 1px #e2e2e6;
+}
+.card-eventos img {
+  width: 80%;
+  height: 200px;
+}
+.card-eventos p {
+  padding: 10px;
+  text-align: justify;
+  text-align: center;
+  color: #451423;
+  font-weight: bold;
+}
+.card-eventos h3 {
+  text-align: center;
+  padding: 10px;
+}
+.card-eventos:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px #e2e2e6;
+}
+.card-eventos button {
+  background-color: #c5a785;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 10px;
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  /*para tela se ajustar a telas menores (responsível)*/
+  .card-eventos {
+    width: 100%;
+  }
+}
