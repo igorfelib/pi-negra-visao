@@ -8,7 +8,8 @@
   --amarelo: #c9a227;
   --preto: #1a0e05;
   --marrom: #7a5c3e;
-  --bg: #e5d9c1;
+  --bg: #F6EDD9;
+  --secundaria:#E8D9BC;
   --bg-card-claro: #fdf6e8;
   --bg-card-escuro: #1a0e05;
   --border: 0.3rem solid #c9b99a;
@@ -37,7 +38,7 @@ a img {
 
 /* ===== HEADER ===== */
 header {
-  background: var(--bg);
+  background: var(--secundaria);
   /* position: fixed; */
   top: 0;
   left: 0;
@@ -55,7 +56,7 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #1a0e0599;
+  color: var(--preto);
   font-size: 1.2em;
   font-weight: 500;
 }
@@ -81,7 +82,7 @@ header div span {
   color: var(--preto);
 }
 
-#linha-nav {
+#linhaDivisoria {
   width: 100%;
   height: 22px;
   background-image: url(/frontend/img/linhaDivisoria.png);
@@ -189,7 +190,7 @@ footer * {
 /* ===== MAIN EVENTOS ===== */
 #eventos {
   position: relative;
-  background-color: #f5efe4;
+  background-color: var(--bg);
 }
 
 #eventos::before {
@@ -207,14 +208,14 @@ footer * {
 
 h2 {
   font-weight: bold;
-  color: #4f3f38;
+  color: var(--marrom);
   justify-content: center;
   display: flex;
   font-size: 50px;
   padding: none;
 }
 section h3 {
-  color: #451423;
+  color: var(--vermelho);
 }
 article {
   display: flex;
@@ -242,7 +243,7 @@ article {
   padding: 10px;
   text-align: justify;
   text-align: center;
-  color: #451423;
+  color: var(--vermelho);
   font-weight: bold;
 }
 .card-eventos h3 {
@@ -254,8 +255,8 @@ article {
   box-shadow: 0 0 0 3px #e2e2e6;
 }
 .card-eventos button {
-  background-color: #c5a785;
-  color: black;
+  background-color: var(--marrom);
+  color: var(--preto);
   padding: 10px 20px;
   border-radius: 10px;
   gap: 20px;
@@ -321,5 +322,28 @@ article {
   color: var(--bg);
 }
 #hero p:nth-of-type(4) {
-  color: #f6edd92e;
+  color: var(--laranja);
+}
+
+
+
+/* ===== PODCAST =====*/
+#podcast {
+  position: relative;
+  background-color: var(--bg);
+  overflow: hidden;
+}
+
+#podcast::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: url("../img/ankara.svg");
+  background-repeat: repeat;
+  background-size: 140px;
+
+  opacity: 0.1;
+
+  pointer-events: none;
 }
