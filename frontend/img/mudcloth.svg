@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+
+  <!-- Cruz central -->
+  <rect x="32" y="8" width="16" height="64" fill="#8b5e34" />
+  <rect x="8" y="32" width="64" height="16" fill="#8b5e34" />
+
+  <!-- Quadrados -->
+  <rect x="4" y="4" width="14" height="14"
+        fill="none"
+        stroke="#8b5e34"
+        stroke-width="2.5" />
+
+  <rect x="62" y="4" width="14" height="14"
+        fill="none"
+        stroke="#8b5e34"
+        stroke-width="2.5" />
+
+  <rect x="4" y="62" width="14" height="14"
+        fill="none"
+        stroke="#8b5e34"
+        stroke-width="2.5" />
+
+  <rect x="62" y="62" width="14" height="14"
+        fill="none"
+        stroke="#8b5e34"
+        stroke-width="2.5" />
+
+  <!-- Centro -->
+  <rect x="36" y="36" width="8" height="8" fill="#8b5e34" />
+
+</svg>
