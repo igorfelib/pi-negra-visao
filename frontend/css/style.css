@@ -46,7 +46,7 @@ h2 {
   background-image: url(../img/linhaDivisoria.png);
   background-repeat: repeat-x;
   /* background-position: right; */
-  background-size: 110px 20px;
+  background-size: 110px 22px;
 }
 
 /* ===== HEADER ===== */
@@ -283,7 +283,7 @@ footer * {
   color: var(--bg);
   width: 60%;
   padding-left: 5rem;
-  margin-block: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .hero-texto strong {
@@ -304,6 +304,80 @@ footer * {
   color: var(--laranja);
 }
 
+/* ===== QUEM SOMOS =====*/
+
+#quem-somos {
+  position: relative;
+  background-color: var(--secundaria);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  gap: 6rem;
+  /* padding: 6rem 5rem; */
+  /* align-items: center; */
+}
+
+#quem-somos::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('../img/mudcloth.svg');
+  background-repeat: repeat;
+  opacity: 0.045;
+  pointer-events: none;
+}
+
+.quemSOmos-titulo {
+  font-size: 9rem;
+  font-weight: 900;
+  line-height: 0.8;
+  font-size: clamp(3.5rem, 10vw, 9.5rem);
+  font-family: var(--font-space);
+  padding-left: 5rem;
+}
+
+.quemSomos-texto {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.625;
+  color: var(--bg);
+  width: 60%;
+  padding-left: 5rem;
+  padding-bottom: 2.5rem;
+}
+
+.quem-somos-esquerda {
+  display: flex;
+  flex-direction: column;
+}
+
+.quem-somos-direita {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding-left: 3rem;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.item span {
+  color: var(--laranja);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.item p {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--preto);
+}
 /* ===== PODCAST =====*/
 #podcast {
   position: relative;
