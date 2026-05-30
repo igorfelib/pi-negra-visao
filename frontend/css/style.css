@@ -487,22 +487,38 @@ footer * {
 }
 
 /* ===== MAIN FORMULARIO ===== */
-
+#inscricao {
+  padding-block: 5rem;
+  max-width: 42rem;
+  margin-inline: auto;
+}
+.titulo-formulario {
+  font-family: var(--font-space);
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  font-size: 3.75rem;
+  text-transform: uppercase;
+}
+.subtitulo-formulario {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.625;
+  color: var(--marrom);
+}
 .card-formulario {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: var(--border);
-  width: 50%;
-  margin: 3rem auto;
+  margin: 3rem 0;
   padding: 2rem;
+  border: 0.1px solid #c9b99a;
+  border-left: 0.5rem solid var(--laranja);
+  background-color: var(--bg);
 }
-
-.alerta-obrigatorio {
+.alerta-formulario {
   display: none;
   color: var(--vermelho);
 }
-
 .card-formulario h1 {
   font-size: 2.5em;
   align-self: flex-start;
@@ -511,7 +527,6 @@ footer * {
   align-self: flex-start;
   margin-bottom: 1.5em;
 }
-
 .linha-formulario {
   display: flex;
 }
@@ -520,28 +535,24 @@ footer * {
   flex-direction: column;
   width: 100%;
 }
-
 .campo-formulario input,
 .campo-formulario select {
   padding: 0.5em;
   margin: 0.5em 0.5em 0.5em 0;
+  border-bottom: 2px solid #1a0e054d;
 }
-
 input:focus,
 select:focus {
   outline: none;
-  border: 2px solid var(--amarelo);
+  border-bottom: 2px solid var(--laranja);
 }
-
 input::placeholder,
 select:invalid {
   color: gray;
 }
-
 select option {
   color: #000;
 }
-
 #buttonInscrever {
   background: var(--verde);
   color: white;
