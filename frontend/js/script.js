@@ -1,8 +1,7 @@
-
+/* =========== MENU AMBURGUER ===========  */
 const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('#site-nav');
 
-/* =========== MENU AMBURGUER ===========  */
 if (menuToggle && siteNav) {
   const closeMobileMenu = () => {
     siteNav.classList.remove('nav-open');

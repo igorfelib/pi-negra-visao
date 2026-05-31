@@ -70,8 +70,7 @@ main > * {
   backdrop-filter: blur(1px);
   box-shadow: 0 10px 30px rgba(26, 14, 5, 0.08);
 }
-.alerta-formulario {
-  display: none;
+.mensagem-erro {
   color: var(--vermelho);
 }
 
