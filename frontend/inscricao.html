@@ -6,17 +6,29 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/inscricao.css" />
     <script src="js/inscricao.js" defer></script>
+    <script src="js/script.js" defer></script>
     <title>Inscrição</title>
   </head>
   <body>
     <header>
       <div>
-        <a href="#" class="direita" id="logo">
+        <a href="./index.html" class="direita" id="logo">
           <img src="img/logo.png" alt="logo negra visão" />
           <span>Negra visão</span>
         </a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Abrir menu de navegação"
+          aria-controls="site-nav"
+          aria-expanded="false"
+        >
+          <span class="menu-toggle-bar" aria-hidden="true"></span>
+          <span class="menu-toggle-bar" aria-hidden="true"></span>
+          <span class="menu-toggle-bar" aria-hidden="true"></span>
+        </button>
         <!-- ao lado da logo -->
-        <nav>
+        <nav id="site-nav">
           <ul>
             <li><a href="./index.html#hero">Home</a></li>
             <li><a href="./index.html#quem-somos">Quem somos</a></li>
