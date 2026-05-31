@@ -1,122 +1,128 @@
 /* Container principal do Painel */
 .container-admin {
-    padding: 2rem 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: var(--bg);
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--bg);
 }
 
 .container-admin h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: var(--preto);
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--preto);
 }
 
 /* Espaços/Cartões para separar visualmente as funções */
 .card-admin {
-    background-color: var(--bg-card-claro);
-    border: var(--border);
-    padding: 2rem;
-    margin-bottom: 2rem;
-    border-radius: 8px;
+  background-color: var(--bg-card-claro);
+  border: var(--border);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
 }
 
 .card-admin h2 {
-    color: var(--marrom);
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--laranja);
-    padding-bottom: 0.5rem;
+  color: var(--marrom);
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--laranja);
+  padding-bottom: 0.5rem;
 }
 
 /* Organização de formulários limpa */
 .linha-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .campo-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .campo-form label {
-    font-weight: bold;
-    color: var(--preto);
-    margin-bottom: 0.3rem;
+  font-weight: bold;
+  color: var(--preto);
+  margin-bottom: 0.3rem;
 }
 
-.campo-form input, 
+.campo-form input,
 .campo-form select {
-    padding: 0.8rem;
-    border: 1px solid var(--marrom);
-    border-radius: 4px;
-    font-size: 1rem;
+  padding: 0.8rem;
+  border: 1px solid var(--marrom);
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 /* Botões */
 .btn-salvar {
-    background-color: var(--verde);
-    color: white;
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 1rem;
-    width: 100%;
+  background-color: var(--verde);
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  width: 100%;
 }
 
 .btn-salvar:hover {
-    background-color: var(--preto);
+  background-color: var(--preto);
 }
 
 .btn-tabela {
-    padding: 0.4rem 0.8rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    color: white;
-    margin-right: 0.3rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  margin-right: 0.3rem;
 }
 
-.btn-editar { background-color: var(--amarelo); color: var(--preto); }
-.btn-excluir { background-color: var(--vermelho); }
+.btn-editar {
+  background-color: var(--amarelo);
+  color: var(--preto);
+}
+.btn-excluir {
+  background-color: var(--vermelho);
+}
 
 /* Tabelas que não quebram em telas pequenas */
 .tabela-scroll {
-    overflow-x: auto;
-    margin-top: 1rem;
+  overflow-x: auto;
+  margin-top: 1rem;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
 }
 
-th, td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #ccc;
-    color: var(--preto);
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+  color: var(--preto);
 }
 
 th {
-    background-color: var(--marrom);
-    color: white;
+  background-color: var(--marrom);
+  color: white;
 }
 
 /* Telas grandes (Monitores) */
 @media (min-width: 768px) {
-    .linha-form {
-        flex-direction: row;
-    }
-    .btn-salvar {
-        width: auto;
-    }
+  .linha-form {
+    flex-direction: row;
+  }
+  .btn-salvar {
+    width: auto;
+  }
 }

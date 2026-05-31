@@ -5,6 +5,7 @@ const inscreverseBtn = document.querySelector('#inscreverseBtn');
 const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('#site-nav');
 
+/* ========== MODAL ========== */
 if (abrirBtn && modal) {
   abrirBtn.addEventListener('click', () => modal.showModal());
 }
