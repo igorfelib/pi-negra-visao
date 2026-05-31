@@ -1,4 +1,15 @@
 /* ===== MAIN FORMULARIO ===== */
+.subtitulo {
+  display: block;
+  color: var(--laranja);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  line-height: 1.33;
+  padding-block: 3rem;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
 #inscricao {
   padding-block: 4rem 5rem;
   max-width: 58rem;
@@ -72,10 +83,11 @@ main > * {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 }
 
-.form-bloco-cabecalho::after {
+.form-bloco-cabecalho::before {
   content: '';
   height: 1px;
   background: rgba(26, 14, 5, 0.12);
@@ -87,6 +99,7 @@ main > * {
   font-weight: 700;
   letter-spacing: 0.2em;
   font-size: 1rem;
+  order: -1;
 }
 
 .form-bloco-titulo {
@@ -213,7 +226,7 @@ select option {
   }
 
   .form-bloco-cabecalho {
-    margin-bottom: 1.1rem;
+    margin-bottom: 2.3rem;
   }
 
   .form-bloco-numero {

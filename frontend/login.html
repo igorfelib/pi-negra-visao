@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/inscricao.css" />
+    <script src="js/inscricao.js" defer></script>
+    <script src="js/script.js" defer></script>
+    <title>Inscrição</title>
+  </head>
+  <body>
+    <header>
+      <div>
+        <a href="./index.html" class="direita" id="logo">
+          <img src="img/logo.png" alt="logo negra visão" />
+          <span>Negra visão</span>
+        </a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Abrir menu de navegação"
+          aria-controls="site-nav"
+          aria-expanded="false"
+        >
+          <span class="menu-toggle-bar" aria-hidden="true"></span>
+          <span class="menu-toggle-bar" aria-hidden="true"></span>
+          <span class="menu-toggle-bar" aria-hidden="true"></span>
+        </button>
+        <!-- ao lado da logo -->
+        <nav id="site-nav">
+          <ul>
+            <li><a href="./index.html#hero">Home</a></li>
+            <li><a href="./index.html#quem-somos">Quem somos</a></li>
+            <li><a href="./index.html#eventos">Eventos</a></li>
+            <li><a href="./index.html#memorial-negro">Museu</a></li>
+            <li><a href="./index.html#biblioteca">Biblioteca</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="inscricao">
+        <span class="subtitulo">· participe </span>
+        <h1 class="titulo-formulario">Inscrição</h1>
+        <p class="subtitulo-formulario">
+          Preencha os dados abaixo para garantir sua vaga
+        </p>
+        <div class="card-formulario">
+          <form action="" id="inscricao-formulario">
+            <div class="form-bloco">
+              <div class="form-bloco-cabecalho">
+                <span class="form-bloco-numero">01</span>
+                <span class="form-bloco-titulo">Evento</span>
+              </div>
+              <div class="campo-formulario campo-formulario-full">
+                <label for="selectEvent">Selecione o Evento *</label>
+                <select id="selectEvent" name="inscricao" required>
+                  <option value="" disabled selected hidden>
+                    Escolha um evento
+                  </option>
+                  <option value="#">1. Lorem, ipsum dolor.</option>
+                  <option value="#">2. Lorem, ipsum dolor.</option>
+                  <option value="#">3. Lorem, ipsum dolor.</option>
+                  <option value="#">4. Lorem, ipsum dolor.</option>
+                </select>
+                <p class="alerta-formulario">Este campo é obrigatório</p>
+              </div>
+            </div>
+            <div class="form-bloco">
+              <div class="form-bloco-cabecalho">
+                <span class="form-bloco-numero">02</span>
+                <span class="form-bloco-titulo">Seus dados</span>
+              </div>
+              <div class="form-grade form-grade-dois">
+                <div class="campo-formulario">
+                  <label for="cpf">CPF *</label>
+                  <input
+                    type="text"
+                    id="cpf"
+                    name="inscricao"
+                    placeholder="000.000.000-00"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    required
+                  />
+                  <p class="alerta-formulario">Este campo é obrigatório</p>
+                </div>
+                <div class="campo-formulario">
+                  <label for="name">Nome completo *</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="inscricao"
+                    placeholder="Seu nome completo"
+                    autocomplete="name"
+                    required
+                  />
+                  <p class="alerta-formulario">Este campo é obrigatório</p>
+                </div>
+                <div class="campo-formulario">
+                  <label for="phone">Telefone *</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="inscricao"
+                    placeholder="(00) 00000-0000"
+                    autocomplete="tel"
+                    required
+                  />
+                  <p class="alerta-formulario">Este campo é obrigatório</p>
+                </div>
+                <div class="campo-formulario">
+                  <label for="email">E-mail *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="inscricao"
+                    placeholder="seu@email.com"
+                    autocomplete="email"
+                    required
+                  />
+                  <p class="alerta-formulario">Este campo é obrigatório</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-bloco">
+              <div class="form-bloco-cabecalho">
+                <span class="form-bloco-numero">03</span>
+                <span class="form-bloco-titulo">Endereço</span>
+              </div>
+              <div class="form-grade form-grade-dois">
+                <div class="campo-formulario">
+                  <label for="endereco-cep">CEP *</label>
+                  <input
+                    type="text"
+                    id="endereco-cep"
+                    name="inscricao"
+                    placeholder="00000-000"
+                    inputmode="numeric"
+                    autocomplete="postal-code"
+                    required
+                  />
+                  <p class="alerta-formulario">Este campo é obrigatório</p>
+                </div>
+                <div class="campo-formulario">
+                  <label for="endereco-cidade">Cidade *</label>
+                  <input
+                    type="text"
+                    id="endereco-cidade"
+                    name="inscricao"
+                    placeholder="Sua cidade"
+                    autocomplete="address-level2"
+                    required
+                  />
+                  <p class="alerta-formulario">Este campo é obrigatório</p>
+                </div>
+                <div class="campo-formulario campo-formulario-full">
+                  <label for="endereco-bairro">Bairro *</label>
+                  <input
+                    type="text"
+                    id="endereco-bairro"
+                    name="inscricao"
+                    placeholder="Seu bairro"
+                    autocomplete="address-level3"
+                    required
+                  />
+                  <p class="alerta-formulario">Este campo é obrigatório</p>
+                </div>
+                <div class="campo-formulario">
+                  <label for="endereco-rua">Rua *</label>
+                  <input
+                    type="text"
+                    id="endereco-rua"
+                    name="inscricao"
+                    placeholder="Nome da rua"
+                    autocomplete="address-line1"
+                    required
+                  />
+                  <p class="alerta-formulario">Este campo é obrigatório</p>
+                </div>
+                <div class="campo-formulario">
+                  <label for="endereco-numero">Nº *</label>
+                  <input
+                    type="text"
+                    id="endereco-numero"
+                    name="inscricao"
+                    placeholder="000"
+                    autocomplete="address-line2"
+                    required
+                  />
+                  <p class="alerta-formulario">Este campo é obrigatório</p>
+                </div>
+              </div>
+            </div>
+            <div class="campo-formulario">
+              <button type="submit" id="buttonInscrever">
+                Inscrever-se agora
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <footer>
+        <div id="footer-alto">
+          <div class="footer-container">
+            <h3>Negra Visão</h3>
+            <p>
+              Associação cultural sem fins lucrativos dedicada à difusão da
+              cultura preta, fortalecimento da identidade negra e combate ao
+              racismo em Atibaia-SP.
+            </p>
+          </div>
+          <div class="footer-container footer-container-social">
+            <h3>Redes Sociais</h3>
+            <div>
+              <a href="#"
+                ><svg
+                  width="24"
+                  height="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon-social"
+                  viewBox="0 0 512 512"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M480 257.35c0-123.7-100.3-224-224-224s-224 100.3-224 224c0 111.8 81.9 204.47 189 221.29V322.12h-56.89v-64.77H221V208c0-56.13 33.45-87.16 84.61-87.16 24.51 0 50.15 4.38 50.15 4.38v55.13H327.5c-27.81 0-36.51 17.26-36.51 35v42h62.12l-9.92 64.77H291v156.54c107.1-16.81 189-109.48 189-221.31z"
+                    fill-rule="evenodd"
+                  /></svg
+              ></a>
+              <a href="#"
+                ><svg
+                  width="24"
+                  height="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon-social"
+                  viewBox="0 0 512 512"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M349.33 69.33a93.62 93.62 0 0193.34 93.34v186.66a93.62 93.62 0 01-93.34 93.34H162.67a93.62 93.62 0 01-93.34-93.34V162.67a93.62 93.62 0 0193.34-93.34h186.66m0-37.33H162.67C90.8 32 32 90.8 32 162.67v186.66C32 421.2 90.8 480 162.67 480h186.66C421.2 480 480 421.2 480 349.33V162.67C480 90.8 421.2 32 349.33 32z"
+                  />
+                  <path
+                    d="M377.33 162.67a28 28 0 1128-28 27.94 27.94 0 01-28 28zM256 181.33A74.67 74.67 0 11181.33 256 74.75 74.75 0 01256 181.33m0-37.33a112 112 0 10112 112 112 112 0 00-112-112z"
+                  /></svg
+              ></a>
+            </div>
+          </div>
+          <div class="footer-container">
+            <h3>Parceiros e Apoiadores</h3>
+            <ul>
+              <li>Prefeitura de Atibaia</li>
+              <li>Secretaria de Cultura</li>
+              <li>Lorem, ipsum dolor.</li>
+              <li>Lorem, ipsum dolor.</li>
+            </ul>
+          </div>
+        </div>
+        <div id="footer-baixo">
+          <p>&#169; 2026 Negra Visão - Todos os direitos reservados</p>
+          <p>Atibaia, São Paulo</p>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>
