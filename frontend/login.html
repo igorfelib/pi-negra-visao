@@ -48,28 +48,28 @@
           <form action="" id="login-formulario">
             <div class="form-bloco">
               <div class="campo-formulario">
-                <label for="cpf">USUÁRIO </label>
+                <label for="usuario">USUÁRIO </label>
                 <input
                   type="text"
-                  id="login"
+                  id="usuario"
+                  class="obrigatorio"
                   name="login"
                   inputmode="numeric"
                   autocomplete="off"
-                  required
                 />
-                <p class="alerta-formulario">Este campo é obrigatório</p>
+                <p class="mensagem-erro"></p>
               </div>
               <div class="campo-formulario">
-                <label for="cpf">SENHA </label>
+                <label for="senha">SENHA </label>
                 <input
                   type="password"
                   id="senha"
+                  class="obrigatorio"
                   name="login"
                   inputmode="numeric"
                   autocomplete="off"
-                  required
                 />
-                <p class="alerta-formulario">Este campo é obrigatório</p>
+                <p class="mensagem-erro"></p>
               </div>
             </div>
 
