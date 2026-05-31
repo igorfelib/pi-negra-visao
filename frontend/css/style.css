@@ -83,6 +83,7 @@ a img {
 nav ul {
   list-style: none;
   display: flex;
+  gap: 0.25rem;
 }
 
 nav ul li {
@@ -93,6 +94,9 @@ nav ul li a {
   color: #1a0e0599;
   font-size: 1rem;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
 }
 
 nav ul li a:hover {
@@ -103,6 +107,7 @@ header div {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  position: relative;
 }
 
 .direita {
@@ -120,6 +125,26 @@ header div span {
   color: var(--preto);
 }
 
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid #1a0e0533;
+  padding: 0.55rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.menu-toggle-bar {
+  display: block;
+  width: 1.45rem;
+  height: 2px;
+  background: var(--preto);
+}
+
+.menu-toggle-bar + .menu-toggle-bar {
+  margin-top: 0.28rem;
+}
+
 /* ===== FOOTER ===== */
 
 footer {
@@ -133,7 +158,7 @@ footer * {
 #footer-alto {
   display: flex;
   justify-content: center;
-  justify-content: font-space-between;
+  justify-content: space-between;
 }
 #footer-baixo {
   text-align: center;
@@ -486,80 +511,244 @@ footer * {
   z-index: 1;
 }
 
-/* ===== MAIN FORMULARIO ===== */
-#inscricao {
-  padding-block: 5rem;
-  max-width: 42rem;
-  margin-inline: auto;
+
+
+@media (max-width: 1024px) {
+  header {
+    padding: 1rem 2.5rem;
+  }
+
+  #hero,
+  #eventos,
+  #quem-somos,
+  #podcast,
+  #memorial-negro,
+  #biblioteca {
+    padding-inline: 2.5rem;
+  }
+
+  .hero-texto {
+    width: 80%;
+  }
+
+  .card-container {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+
+  #memorial-negro p,
+  #biblioteca p {
+    width: 85%;
+  }
 }
-.titulo-formulario {
-  font-family: var(--font-space);
-  letter-spacing: -0.03em;
-  font-weight: 700;
-  font-size: 3.75rem;
-  text-transform: uppercase;
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 4.5rem;
+  }
+
+  header {
+    padding: 0.85rem 1.5rem;
+  }
+
+  header div span {
+    padding-left: 1rem;
+    font-size: 1rem;
+  }
+
+  .menu-toggle {
+    display: inline-block;
+    margin-left: 0.75rem;
+  }
+
+  nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.8rem);
+    left: 0;
+    right: 0;
+    background: var(--secundaria);
+    border: 1px solid #1a0e0533;
+    border-top: 3px solid var(--laranja);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
+    z-index: 1100;
+  }
+
+  nav.nav-open {
+    display: block;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 0;
+  }
+
+  nav ul li {
+    padding: 0;
+  }
+
+  nav ul li a {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    color: var(--preto);
+  }
+
+  #hero,
+  #eventos,
+  #quem-somos,
+  #podcast,
+  #memorial-negro,
+  #biblioteca {
+    padding-inline: 1.5rem;
+    min-height: auto;
+  }
+
+  .titulo-secao,
+  .titulo-secao span {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    line-height: 0.9;
+  }
+
+  .hero-titulo,
+  .hero-titulo span {
+    font-size: clamp(2.2rem, 9vw, 5rem);
+    line-height: 0.88;
+  }
+
+  .hero-texto,
+  #memorial-negro p,
+  #biblioteca p {
+    width: 100%;
+    font-size: 1.05rem;
+  }
+
+  #quem-somos,
+  #podcast {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .card-container {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 1rem;
+    padding-block: 2.5rem;
+  }
+
+  .podcast-direita img {
+    width: min(70%, 26rem);
+  }
+
+  #footer-alto {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-container {
+    width: 100%;
+    max-width: 34rem;
+    padding-inline: 1rem;
+  }
+
+  .subtitulo {
+    padding-block: 2rem;
+  }
 }
-.subtitulo-formulario {
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.625;
-  color: var(--marrom);
+
+@media (max-width: 480px) {
+  html {
+    scroll-padding-top: 4rem;
+  }
+
+  header {
+    padding: 0.75rem 1rem;
+  }
+
+  a img {
+    height: 2.25rem;
+  }
+
+  header div span {
+    padding-left: 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  #hero,
+  #eventos,
+  #quem-somos,
+  #podcast,
+  #memorial-negro,
+  #biblioteca {
+    padding-inline: 1rem;
+  }
+
+  #hero {
+    min-height: 68vh;
+  }
+
+  .hero-titulo,
+  .hero-titulo span {
+    font-size: clamp(1.8rem, 12vw, 3.2rem);
+  }
+
+  .hero-texto,
+  .quemSomos-texto,
+  #memorial-negro p,
+  #biblioteca p {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .subtitulo {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    padding-block: 1.4rem;
+  }
+
+  .quem-item {
+    grid-template-columns: 2.25rem 1fr;
+    gap: 0.75rem;
+  }
+
+  .quem-item p {
+    font-size: 1.1rem;
+  }
+
+  .card-container {
+    grid-template-columns: 1fr;
+  }
+
+  .card-eventos {
+    padding: 1rem;
+  }
+
+  .card-eventos button {
+    width: 100%;
+    gap: 0.7rem;
+    padding: 0.9rem 1rem;
+    font-size: 0.92rem;
+  }
+
+  .podcast-direita img {
+    width: 85%;
+    padding-block: 1.4rem;
+  }
+
+  #linhaDivisoria {
+    height: 14px;
+    background-size: 80px 14px;
+  }
+
+  #footer-baixo {
+    padding: 0.75rem 1rem 1.25rem;
+  }
 }
-.card-formulario {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 3rem 0;
-  padding: 2rem;
-  border: 0.1px solid #c9b99a;
-  border-left: 0.5rem solid var(--laranja);
-  background-color: var(--bg);
-}
-.alerta-formulario {
-  display: none;
-  color: var(--vermelho);
-}
-.card-formulario h1 {
-  font-size: 2.5em;
-  align-self: flex-start;
-}
-.card-formulario p {
-  align-self: flex-start;
-  margin-bottom: 1.5em;
-}
-.linha-formulario {
-  display: flex;
-}
-.campo-formulario {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.campo-formulario input,
-.campo-formulario select {
-  padding: 0.5em;
-  margin: 0.5em 0.5em 0.5em 0;
-  border-bottom: 2px solid #1a0e054d;
-}
-input:focus,
-select:focus {
-  outline: none;
-  border-bottom: 2px solid var(--laranja);
-}
-input::placeholder,
-select:invalid {
-  color: gray;
-}
-select option {
-  color: #000;
-}
-#buttonInscrever {
-  background: var(--verde);
-  color: white;
-  border: none;
-  padding: 0.5em 1em;
-  font-size: 1.2em;
-  font-weight: 500;
-  cursor: pointer;
-  margin: 1.2em 0;
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

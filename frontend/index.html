@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Negra Visão</title>
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/script.js" defer></script>
   </head>
   <body>
     <header>
@@ -13,8 +14,19 @@
           <img src="img/logo.png" alt="logo negra visão" />
           <span>Negra visão</span>
         </a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Abrir menu de navegação"
+          aria-controls="site-nav"
+          aria-expanded="false"
+        >
+          <span class="menu-toggle-bar" aria-hidden="true"></span>
+          <span class="menu-toggle-bar" aria-hidden="true"></span>
+          <span class="menu-toggle-bar" aria-hidden="true"></span>
+        </button>
         <!-- ao lado da logo -->
-        <nav>
+        <nav id="site-nav">
           <ul>
             <li><a href="#hero">Home</a></li>
             <li><a href="#quem-somos">Quem somos</a></li>
