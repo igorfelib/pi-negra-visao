@@ -1,56 +1,140 @@
-function ValidacaoCpf(cpf) {
-  const cpf = document.getElementById(cpf).value;
-  cpf = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
+function normalizarCpf(cpf) {
+  return cpf.replace(/\D/g, '');
+}
 
-  if (cpf.length !== 11) {
-    console.error('cpf inválido!');
-    return;
+function validacaoCpf(cpf) {
+  const cpfLimpo = normalizarCpf(cpf);
+
+  if (cpfLimpo.length !== 11) {
+    return false;
   }
+
+  if (/^(\d)\1+$/.test(cpfLimpo)) {
+    return false;
+  }
+
   let soma = 0;
   for (let i = 0; i < 9; i++) {
-    soma += parseInt(cpf.charAt(i)) * (10 - i);
+    soma += Number(cpfLimpo.charAt(i)) * (10 - i);
   }
-  let resto = 11 - (soma % 11);
-  let digito1 = resto === 10 || resto === 11 ? 0 : resto;
 
-  if (digito1 !== parseInt(cpf.charAt(9))) return false;
+  let resto = (soma * 10) % 11;
+  if (resto === 10) {
+    resto = 0;
+  }
+
+  if (resto !== Number(cpfLimpo.charAt(9))) {
+    return false;
+  }
 
   soma = 0;
   for (let i = 0; i < 10; i++) {
-    soma += parseInt(cpf.charAt(i)) * (11 - i);
+    soma += Number(cpfLimpo.charAt(i)) * (11 - i);
   }
-  resto = 11 - (soma % 11);
-  let digito2 = resto === 10 || resto === 11 ? 0 : resto;
 
-  if (digito2 !== parseInt(cpf.charAt(10))) return false;
+  resto = (soma * 10) % 11;
+  if (resto === 10) {
+    resto = 0;
+  }
 
-  return true;
+  return resto === Number(cpfLimpo.charAt(10));
 }
 
-function validacaoemail(email) {
-  const email = document.getElementById(email).value;
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
-
-  const testeEmail = document.getElementById('email').value;
-  if (validacaoemail(testeEmail)) {
+function limparMensagemCpf() {
+  const mensagemCpf = document
+    .getElementById('cpf')
+    .parentElement.querySelector('.mensagem-erro');
+  if (mensagemCpf) {
+    mensagemCpf.textContent = '';
   }
 }
 
-function validacaocep(cep) {}
+function exibirMensagemCpf(mensagem) {
+  const mensagemCpf = document
+    .getElementById('cpf')
+    .parentElement.querySelector('.mensagem-erro');
+  if (mensagemCpf) {
+    mensagemCpf.textContent = mensagem;
+  }
+}
 
-function validacaotel(telefone) {}
+function obterAlunos() {
+  return JSON.parse(localStorage.getItem('alunos')) || [];
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-  carregarAlunos();
-  document.getElementById('cadastroForm').addEventListener('submit', savealuno);
-});
+function salvarAlunos(alunos) {
+  localStorage.setItem('alunos', JSON.stringify(alunos));
+}
+
+function preencherFormularioComAluno(aluno) {
+  document.getElementById('nome').value = aluno.nome || '';
+  document.getElementById('telefone').value = aluno.telefone || '';
+  document.getElementById('email').value = aluno.email || '';
+  document.getElementById('cep').value = aluno.cep || '';
+  document.getElementById('cidade').value = aluno.cidade || '';
+  document.getElementById('bairro').value = aluno.bairro || '';
+  document.getElementById('rua').value = aluno.rua || '';
+  document.getElementById('numero').value = aluno.numeroresidencia || '';
+  document.getElementById('evento').value = aluno.evento || '';
+}
+
+function buscarAlunoPorCpf(cpf) {
+  const cpfLimpo = normalizarCpf(cpf);
+  const alunos = obterAlunos();
+
+  for (let i = alunos.length - 1; i >= 0; i -= 1) {
+    if (normalizarCpf(alunos[i].cpf || '') === cpfLimpo) {
+      return alunos[i];
+    }
+  }
+
+  return null;
+}
+
+function preencherFormularioSeCpfExistente() {
+  const cpfInput = document.getElementById('cpf');
+  const cpf = cpfInput.value.trim();
+
+  if (!validacaoCpf(cpf)) {
+    return;
+  }
+
+  const aluno = buscarAlunoPorCpf(cpf);
+  if (aluno) {
+    preencherFormularioComAluno(aluno);
+  }
+}
 
 function savealuno(event) {
   event.preventDefault();
-  let aluno = JSON.parse(localStorage.getItem('alunos')) || [];
+
+  const cpfInput = document.getElementById('cpf');
+  const cpf = cpfInput.value.trim();
+  const eventoSelecionado = document.getElementById('evento').value;
+
+  limparMensagemCpf();
+
+  if (!validacaoCpf(cpf)) {
+    exibirMensagemCpf('CPF inválido');
+    return;
+  }
+
+  const alunos = obterAlunos();
+  const cpfLimpo = normalizarCpf(cpf);
+
+  if (
+    alunos.some(
+      (c) =>
+        normalizarCpf(c.cpf || '') === cpfLimpo &&
+        c.evento === eventoSelecionado,
+    )
+  ) {
+    alert('Aluno ja cadastrado para este evento');
+    return;
+  }
+
   const valor = {
-    cpf: document.getElementById('cpf').value,
+    cpf,
     nome: document.getElementById('nome').value,
     telefone: document.getElementById('telefone').value,
     email: document.getElementById('email').value,
@@ -59,21 +143,21 @@ function savealuno(event) {
     bairro: document.getElementById('bairro').value,
     rua: document.getElementById('rua').value,
     numeroresidencia: document.getElementById('numero').value,
+    evento: eventoSelecionado,
   };
-  if (cpf) {
-    alunos = alunos.map((c) => (c.cpf === cpf ? valor : alunos));
-    cpf = null;
-    document.querySelector(button[(type = 'submit')]).innerText =
-      'Inscrever-se';
-    document.getElementById('cpf').disable = false;
-  } else {
-    if (alunos.some((c) => c.cpf === valor.cpf)) {
-      alert('CPF já cadastrado');
-      return;
-    }
-    alunos.push(valor);
-  }
-  localStorage.setItem('alunos', JSON.stringify(alunos));
-  document.getElementById('cadastroForm').reset();
-  atualizarTabela();
+
+  alunos.push(valor);
+  salvarAlunos(alunos);
+  document.getElementById('inscricao-formulario').reset();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const formulario = document.getElementById('inscricao-formulario');
+
+  formulario.addEventListener('submit', savealuno);
+
+  document.getElementById('cpf').addEventListener('input', limparMensagemCpf);
+  document
+    .getElementById('cpf')
+    .addEventListener('blur', preencherFormularioSeCpfExistente);
+});
