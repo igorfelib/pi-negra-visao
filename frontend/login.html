@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/theme.css" />
-    <link rel="stylesheet" href="css/inscricao.css" />
-    <script src="js/inscricao.js" defer></script>
+    <link rel="stylesheet" href="css/login.css" />
+    <script src="js/login.js" defer></script>
     <script src="js/script.js" defer></script>
-    <title>Inscrição</title>
+    <title>Login</title>
   </head>
   <body>
     <header>
@@ -41,32 +41,30 @@
     </header>
 
     <main>
-      <section id="inscricao">
+      <section id="secao-login">
         <h1 class="titulo-formulario">Login</h1>
         <p class="subtitulo-formulario">Faça login para acessar sua conta</p>
         <div class="card-formulario">
-          <form action="" id="inscricao-formulario">
+          <form action="" id="login-formulario">
             <div class="form-bloco">
-              <div class="campo-formulario campo-formulario-full">
-                <label for="cpf">LOGIN </label>
+              <div class="campo-formulario">
+                <label for="cpf">USUÁRIO </label>
                 <input
                   type="text"
                   id="login"
-                  name="inscricao"
-                  placeholder="000.000.000-00"
+                  name="login"
                   inputmode="numeric"
                   autocomplete="off"
                   required
                 />
                 <p class="alerta-formulario">Este campo é obrigatório</p>
               </div>
-              <div class="campo-formulario campo-formulario-full">
+              <div class="campo-formulario">
                 <label for="cpf">SENHA </label>
                 <input
                   type="password"
                   id="senha"
-                  name="inscricao"
-                  placeholder="000.000.000-00"
+                  name="login"
                   inputmode="numeric"
                   autocomplete="off"
                   required
@@ -76,7 +74,7 @@
             </div>
 
             <div class="campo-formulario">
-              <button type="submit" id="buttonInscrever">ENTRAR</button>
+              <button type="submit" id="buttonEntrar">ENTRAR</button>
             </div>
           </form>
         </div>
