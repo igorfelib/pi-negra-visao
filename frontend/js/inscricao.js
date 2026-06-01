@@ -49,6 +49,37 @@ function limparMensagemCpf() {
   }
 }
 
+function obterMensagemErroDoCampo(campo) {
+  return campo.parentElement.querySelector('.mensagem-erro');
+}
+
+function limparMensagensObrigatorias() {
+  document.querySelectorAll('.obrigatorio').forEach((campo) => {
+    const mensagemErro = obterMensagemErroDoCampo(campo);
+    if (mensagemErro) {
+      mensagemErro.textContent = '';
+    }
+  });
+}
+
+function validarCamposObrigatorios() {
+  const camposObrigatorios = document.querySelectorAll('.obrigatorio');
+  let formularioValido = true;
+
+  camposObrigatorios.forEach((campo) => {
+    const mensagemErro = obterMensagemErroDoCampo(campo);
+
+    if (!campo.value.trim()) {
+      if (mensagemErro) {
+        mensagemErro.textContent = '* campo obrigatorio';
+      }
+      formularioValido = false;
+    }
+  });
+
+  return formularioValido;
+}
+
 function exibirMensagemCpf(mensagem) {
   const mensagemCpf = document
     .getElementById('cpf')
@@ -75,7 +106,6 @@ function preencherFormularioComAluno(aluno) {
   document.getElementById('bairro').value = aluno.bairro || '';
   document.getElementById('rua').value = aluno.rua || '';
   document.getElementById('numero').value = aluno.numeroresidencia || '';
-  document.getElementById('evento').value = aluno.evento || '';
 }
 
 function buscarAlunoPorCpf(cpf) {
@@ -105,6 +135,24 @@ function preencherFormularioSeCpfExistente() {
   }
 }
 
+function validarCpfAoPreencher() {
+  const cpfInput = document.getElementById('cpf');
+  const cpf = cpfInput.value.trim();
+  const cpfLimpo = normalizarCpf(cpf);
+
+  if (!cpf) {
+    return;
+  }
+
+  if (cpfLimpo.length < 11) {
+    return;
+  }
+
+  if (!validacaoCpf(cpf)) {
+    exibirMensagemCpf('CPF inválido');
+  }
+}
+
 function savealuno(event) {
   event.preventDefault();
 
@@ -112,7 +160,12 @@ function savealuno(event) {
   const cpf = cpfInput.value.trim();
   const eventoSelecionado = document.getElementById('evento').value;
 
+  limparMensagensObrigatorias();
   limparMensagemCpf();
+
+  if (!validarCamposObrigatorios()) {
+    return;
+  }
 
   if (!validacaoCpf(cpf)) {
     exibirMensagemCpf('CPF inválido');
@@ -156,7 +209,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   formulario.addEventListener('submit', savealuno);
 
+  document.querySelectorAll('.obrigatorio').forEach((campo) => {
+    campo.addEventListener('input', () => {
+      const mensagemErro = obterMensagemErroDoCampo(campo);
+      if (mensagemErro) {
+        mensagemErro.textContent = '';
+      }
+    });
+  });
+
   document.getElementById('cpf').addEventListener('input', limparMensagemCpf);
+  document
+    .getElementById('cpf')
+    .addEventListener('blur', validarCpfAoPreencher);
   document
     .getElementById('cpf')
     .addEventListener('blur', preencherFormularioSeCpfExistente);

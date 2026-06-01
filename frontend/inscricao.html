@@ -56,14 +56,17 @@
               </div>
               <div class="campo-formulario campo-formulario-full">
                 <label for="evento">Selecione o Evento *</label>
-                <select id="evento" name="inscricao">
+                <select id="evento" class="obrigatorio" name="inscricao">
                   <option value="" disabled selected hidden>
                     Escolha um evento
                   </option>
-                  <option value="#">1. Lorem, ipsum dolor.</option>
-                  <option value="#">2. Lorem, ipsum dolor.</option>
-                  <option value="#">3. Lorem, ipsum dolor.</option>
-                  <option value="#">4. Lorem, ipsum dolor.</option>
+                  <option value="capoeira">Capoeira</option>
+                  <option value="colo-de-mae">Colo de mãe</option>
+                  <option value="cine-visao">Cine visão</option>
+                  <option value="danca-samba-rock">dança: samba rock</option>
+                  <option value="teatro-ana-julia">Teatro: Ana Julia</option>
+                  <option value="quinta-coletiva">Quinta coletiva</option>
+                  <option value="aya-yoga">Aya yoga</option>
                 </select>
                 <p class="mensagem-erro"></p>
               </div>
@@ -79,6 +82,7 @@
                   <input
                     type="text"
                     id="cpf"
+                    class="obrigatorio"
                     name="inscricao"
                     placeholder="000.000.000-00"
                     inputmode="numeric"
@@ -91,6 +95,7 @@
                   <input
                     type="text"
                     id="nome"
+                    class="obrigatorio"
                     name="inscricao"
                     placeholder="Seu nome completo"
                     autocomplete="name"
@@ -102,6 +107,7 @@
                   <input
                     type="tel"
                     id="telefone"
+                    class="obrigatorio"
                     name="inscricao"
                     placeholder="(00) 00000-0000"
                     autocomplete="tel"
@@ -113,6 +119,7 @@
                   <input
                     type="email"
                     id="email"
+                    class="obrigatorio"
                     name="inscricao"
                     placeholder="seu@email.com"
                     autocomplete="email"
@@ -132,6 +139,7 @@
                   <input
                     type="text"
                     id="cep"
+                    class="obrigatorio"
                     name="inscricao"
                     placeholder="00000-000"
                     inputmode="numeric"
@@ -144,6 +152,7 @@
                   <input
                     type="text"
                     id="cidade"
+                    class="obrigatorio"
                     name="inscricao"
                     placeholder="Sua cidade"
                     autocomplete="address-level2"
@@ -155,6 +164,7 @@
                   <input
                     type="text"
                     id="bairro"
+                    class="obrigatorio"
                     name="inscricao"
                     placeholder="Seu bairro"
                     autocomplete="address-level3"
@@ -166,6 +176,7 @@
                   <input
                     type="text"
                     id="rua"
+                    class="obrigatorio"
                     name="inscricao"
                     placeholder="Nome da rua"
                     autocomplete="address-line1"
@@ -177,6 +188,7 @@
                   <input
                     type="text"
                     id="numero"
+                    class="obrigatorio"
                     name="inscricao"
                     placeholder="000"
                     autocomplete="address-line2"
