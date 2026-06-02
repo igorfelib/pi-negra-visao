@@ -36,10 +36,10 @@
 }
 
 #eventos::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  background-image: url("../img/mudcloth.svg");
+  background-image: url('../img/mudcloth.svg');
   background-repeat: repeat;
   opacity: 0.045;
   pointer-events: none;
@@ -232,10 +232,10 @@
 }
 
 #hero::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  background-image: url("../img/adinkra.svg");
+  background-image: url('../img/adinkra.svg');
   background-repeat: repeat;
   opacity: 0.07;
   pointer-events: none;
@@ -284,10 +284,10 @@
 }
 
 #quem-somos::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  background-image: url("../img/mudcloth.svg");
+  background-image: url('../img/mudcloth.svg');
   background-repeat: repeat;
   opacity: 0.045;
   pointer-events: none;
@@ -347,10 +347,10 @@
 }
 
 #podcast::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  background-image: url("../img/ankara.svg");
+  background-image: url('../img/ankara.svg');
   background-repeat: repeat;
   background-size: 140px;
   opacity: 0.1;
@@ -375,13 +375,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 #memorial-negro::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  background-image: url("../img/adinkra.svg");
+  background-image: url('../img/adinkra.svg');
   background-repeat: repeat;
   opacity: 0.07;
   pointer-events: none;
@@ -414,13 +415,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 #biblioteca::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  background-image: url("../img/adinkra.svg");
+  background-image: url('../img/adinkra.svg');
   background-repeat: repeat;
   opacity: 0.07;
   pointer-events: none;
@@ -428,7 +430,7 @@
 
 #biblioteca::after {
   background-color: rgba(67, 67, 252, 0.811);
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   opacity: 0.5;
