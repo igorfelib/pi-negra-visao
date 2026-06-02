@@ -1,5 +1,5 @@
 function normalizarCpf(cpf) {
-  return cpf.replace(/\D/g, "");
+  return cpf.replace(/\D/g, '');
 }
 
 function validacaoCpf(cpf) {
@@ -42,32 +42,32 @@ function validacaoCpf(cpf) {
 
 function limparMensagemCpf() {
   const mensagemCpf = document
-    .getElementById("cpf")
-    .parentElement.querySelector(".mensagem-erro");
+    .getElementById('cpf')
+    .parentElement.querySelector('.mensagem-erro');
   if (mensagemCpf) {
-    mensagemCpf.textContent = "";
+    mensagemCpf.textContent = '';
   }
-  const cpfInput = document.getElementById("cpf");
+  const cpfInput = document.getElementById('cpf');
   if (cpfInput && cpfInput.dataset) {
     delete cpfInput.dataset.invalid;
   }
 }
 
 function obterMensagemErroDoCampo(campo) {
-  return campo.parentElement.querySelector(".mensagem-erro");
+  return campo.parentElement.querySelector('.mensagem-erro');
 }
 
 function limparMensagensObrigatorias() {
-  document.querySelectorAll(".obrigatorio").forEach((campo) => {
+  document.querySelectorAll('.obrigatorio').forEach((campo) => {
     const mensagemErro = obterMensagemErroDoCampo(campo);
     if (mensagemErro) {
-      mensagemErro.textContent = "";
+      mensagemErro.textContent = '';
     }
   });
 }
 
 function validarCamposObrigatorios() {
-  const camposObrigatorios = document.querySelectorAll(".obrigatorio");
+  const camposObrigatorios = document.querySelectorAll('.obrigatorio');
   let formularioValido = true;
 
   camposObrigatorios.forEach((campo) => {
@@ -75,7 +75,7 @@ function validarCamposObrigatorios() {
 
     if (!campo.value.trim()) {
       if (mensagemErro) {
-        mensagemErro.textContent = "* campo obrigatorio";
+        mensagemErro.textContent = '* campo obrigatorio';
       }
       formularioValido = false;
     }
@@ -86,30 +86,30 @@ function validarCamposObrigatorios() {
 
 function exibirMensagemCpf(mensagem) {
   const mensagemCpf = document
-    .getElementById("cpf")
-    .parentElement.querySelector(".mensagem-erro");
+    .getElementById('cpf')
+    .parentElement.querySelector('.mensagem-erro');
   if (mensagemCpf) {
     mensagemCpf.textContent = mensagem;
   }
 }
 
 function obterAlunos() {
-  return JSON.parse(localStorage.getItem("alunos")) || [];
+  return JSON.parse(localStorage.getItem('alunos')) || [];
 }
 
 function salvarAlunos(alunos) {
-  localStorage.setItem("alunos", JSON.stringify(alunos));
+  localStorage.setItem('alunos', JSON.stringify(alunos));
 }
 
 function preencherFormularioComAluno(aluno) {
-  document.getElementById("nome").value = aluno.nome || "";
-  document.getElementById("telefone").value = aluno.telefone || "";
-  document.getElementById("email").value = aluno.email || "";
-  document.getElementById("cep").value = aluno.cep || "";
-  document.getElementById("cidade").value = aluno.cidade || "";
-  document.getElementById("bairro").value = aluno.bairro || "";
-  document.getElementById("rua").value = aluno.rua || "";
-  document.getElementById("numero").value = aluno.numeroresidencia || "";
+  document.getElementById('nome').value = aluno.nome || '';
+  document.getElementById('telefone').value = aluno.telefone || '';
+  document.getElementById('email').value = aluno.email || '';
+  document.getElementById('cep').value = aluno.cep || '';
+  document.getElementById('cidade').value = aluno.cidade || '';
+  document.getElementById('bairro').value = aluno.bairro || '';
+  document.getElementById('rua').value = aluno.rua || '';
+  document.getElementById('numero').value = aluno.numeroresidencia || '';
 }
 
 function buscarAlunoPorCpf(cpf) {
@@ -117,7 +117,7 @@ function buscarAlunoPorCpf(cpf) {
   const alunos = obterAlunos();
 
   for (let i = alunos.length - 1; i >= 0; i -= 1) {
-    if (normalizarCpf(alunos[i].cpf || "") === cpfLimpo) {
+    if (normalizarCpf(alunos[i].cpf || '') === cpfLimpo) {
       return alunos[i];
     }
   }
@@ -126,7 +126,7 @@ function buscarAlunoPorCpf(cpf) {
 }
 
 function preencherFormularioSeCpfExistente() {
-  const cpfInput = document.getElementById("cpf");
+  const cpfInput = document.getElementById('cpf');
   const cpf = cpfInput.value.trim();
 
   if (!validacaoCpf(cpf)) {
@@ -139,8 +139,26 @@ function preencherFormularioSeCpfExistente() {
   }
 }
 
+function selecionarEventoPorUrl() {
+  const selectEvento = document.getElementById('evento');
+  const eventoSalvo = localStorage.getItem('eventoSelecionadoInscricao');
+
+  if (!eventoSalvo || !selectEvento) {
+    return;
+  }
+
+  const opcaoExiste = Array.from(selectEvento.options).some(
+    (opcao) => opcao.value === eventoSalvo,
+  );
+
+  if (opcaoExiste) {
+    selectEvento.value = eventoSalvo;
+    localStorage.removeItem('eventoSelecionadoInscricao');
+  }
+}
+
 function validarCpfAoPreencher() {
-  const cpfInput = document.getElementById("cpf");
+  const cpfInput = document.getElementById('cpf');
   const cpf = cpfInput.value.trim();
   const cpfLimpo = normalizarCpf(cpf);
 
@@ -149,14 +167,14 @@ function validarCpfAoPreencher() {
   }
 
   if (cpfLimpo.length < 11) {
-    exibirMensagemCpf("CPF inválido");
-    if (cpfInput && cpfInput.dataset) cpfInput.dataset.invalid = "true";
+    exibirMensagemCpf('CPF inválido');
+    if (cpfInput && cpfInput.dataset) cpfInput.dataset.invalid = 'true';
     return;
   }
 
   if (!validacaoCpf(cpf)) {
-    exibirMensagemCpf("CPF inválido");
-    if (cpfInput && cpfInput.dataset) cpfInput.dataset.invalid = "true";
+    exibirMensagemCpf('CPF inválido');
+    if (cpfInput && cpfInput.dataset) cpfInput.dataset.invalid = 'true';
   } else {
     if (cpfInput && cpfInput.dataset) delete cpfInput.dataset.invalid;
   }
@@ -165,9 +183,9 @@ function validarCpfAoPreencher() {
 function savealuno(event) {
   event.preventDefault();
 
-  const cpfInput = document.getElementById("cpf");
+  const cpfInput = document.getElementById('cpf');
   const cpf = cpfInput.value.trim();
-  const eventoSelecionado = document.getElementById("evento").value;
+  const eventoSelecionado = document.getElementById('evento').value;
 
   limparMensagensObrigatorias();
   limparMensagemCpf();
@@ -175,10 +193,10 @@ function savealuno(event) {
   let formularioValido = validarCamposObrigatorios();
 
   if (
-    (cpfInput && cpfInput.dataset && cpfInput.dataset.invalid === "true") ||
+    (cpfInput && cpfInput.dataset && cpfInput.dataset.invalid === 'true') ||
     (cpf && !validacaoCpf(cpf))
   ) {
-    exibirMensagemCpf("CPF inválido");
+    exibirMensagemCpf('CPF inválido');
     formularioValido = false;
   }
 
@@ -192,51 +210,52 @@ function savealuno(event) {
   if (
     alunos.some(
       (c) =>
-        normalizarCpf(c.cpf || "") === cpfLimpo &&
+        normalizarCpf(c.cpf || '') === cpfLimpo &&
         c.evento === eventoSelecionado,
     )
   ) {
-    alert("Aluno ja cadastrado para este evento");
+    alert('Aluno ja cadastrado para este evento');
     return;
   }
 
   const valor = {
     cpf,
-    nome: document.getElementById("nome").value,
-    telefone: document.getElementById("telefone").value,
-    email: document.getElementById("email").value,
-    cep: document.getElementById("cep").value,
-    cidade: document.getElementById("cidade").value,
-    bairro: document.getElementById("bairro").value,
-    rua: document.getElementById("rua").value,
-    numeroresidencia: document.getElementById("numero").value,
+    nome: document.getElementById('nome').value,
+    telefone: document.getElementById('telefone').value,
+    email: document.getElementById('email').value,
+    cep: document.getElementById('cep').value,
+    cidade: document.getElementById('cidade').value,
+    bairro: document.getElementById('bairro').value,
+    rua: document.getElementById('rua').value,
+    numeroresidencia: document.getElementById('numero').value,
     evento: eventoSelecionado,
   };
 
   alunos.push(valor);
   salvarAlunos(alunos);
-  document.getElementById("inscricao-formulario").reset();
+  document.getElementById('inscricao-formulario').reset();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const formulario = document.getElementById("inscricao-formulario");
+document.addEventListener('DOMContentLoaded', () => {
+  const formulario = document.getElementById('inscricao-formulario');
 
-  formulario.addEventListener("submit", savealuno);
+  selecionarEventoPorUrl();
+  formulario.addEventListener('submit', savealuno);
 
-  document.querySelectorAll(".obrigatorio").forEach((campo) => {
-    campo.addEventListener("input", () => {
+  document.querySelectorAll('.obrigatorio').forEach((campo) => {
+    campo.addEventListener('input', () => {
       const mensagemErro = obterMensagemErroDoCampo(campo);
       if (mensagemErro) {
-        mensagemErro.textContent = "";
+        mensagemErro.textContent = '';
       }
     });
   });
 
-  document.getElementById("cpf").addEventListener("input", limparMensagemCpf);
+  document.getElementById('cpf').addEventListener('input', limparMensagemCpf);
   document
-    .getElementById("cpf")
-    .addEventListener("blur", validarCpfAoPreencher);
+    .getElementById('cpf')
+    .addEventListener('blur', validarCpfAoPreencher);
   document
-    .getElementById("cpf")
-    .addEventListener("blur", preencherFormularioSeCpfExistente);
+    .getElementById('cpf')
+    .addEventListener('blur', preencherFormularioSeCpfExistente);
 });
