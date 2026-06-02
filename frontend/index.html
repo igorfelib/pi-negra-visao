@@ -16,18 +16,11 @@
           <img src="img/logo_sem_nome.svg" alt="logo negra visão" />
           <span>Negra visão</span>
         </a>
-        <button
-          class="menu-toggle"
-          type="button"
-          aria-label="Abrir menu de navegação"
-          aria-controls="site-nav"
-          aria-expanded="false"
-        >
-          <span class="menu-toggle-bar" aria-hidden="true"></span>
-          <span class="menu-toggle-bar" aria-hidden="true"></span>
-          <span class="menu-toggle-bar" aria-hidden="true"></span>
+        <button class="menu-toggle" type="button">
+          <span class="menu-toggle-bar"></span>
+          <span class="menu-toggle-bar"></span>
+          <span class="menu-toggle-bar"></span>
         </button>
-        <!-- ao lado da logo -->
         <nav id="site-nav">
           <ul>
             <li><a href="#hero">Home</a></li>
@@ -122,7 +115,7 @@
           <div class="card-eventos">
             <h3>colo de mãe</h3>
             <div>
-              <p><img src="img/calendar.svg" /> 29 Novembro - 30 Novembro</p>
+              <p><img src="img/calendar.svg" /> 29 - 30 Novembro</p>
               <p><img src="img/clock.svg" /> 18:30</p>
             </div>
             <img src="img/encontro_de_mae.jpg" />
@@ -142,7 +135,7 @@
             </button>
           </div>
           <div class="card-eventos">
-            <h3>dança: samba rock</h3>
+            <h3>Dança: samba rock</h3>
             <div>
               <p><img src="img/calendar.svg" /> 30 Novembro</p>
               <p><img src="img/clock.svg" /> 14:00</p>
@@ -187,6 +180,19 @@
           </div>
         </div>
       </section>
+
+      <dialog id="event-modal" class="event-modal">
+        <div class="event-modal__content">
+          <button type="button" class="event-modal__close">&times;</button>
+          <span class="event-modal__eyebrow">· evento ·</span>
+          <h3 id="event-modal-title"></h3>
+          <p class="event-modal__meta" id="event-modal-meta"></p>
+          <p id="event-modal-text"></p>
+          <div class="event-modal__actions">
+            <a href="./inscricao.html" class="event-modal__cta">Inscreva-se</a>
+          </div>
+        </div>
+      </dialog>
 
       <div id="linhaDivisoria"></div>
 

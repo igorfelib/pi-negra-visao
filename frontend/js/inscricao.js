@@ -1,7 +1,8 @@
+// Função para normalizar o CPF, removendo caracteres não numéricos(tive que separar essa função para aproveitar na validação e na busca do CPF)
 function normalizarCpf(cpf) {
   return cpf.replace(/\D/g, '');
 }
-
+// Chama a função de normalização para garantir que o CPF seja comparado corretamente e verifica se o CPF é válido, retornando true se for válido ou false se for inválido, seguindo as regras de validação do CPF, incluindo a verificação dos dígitos verificadores e evitando CPFs com todos os dígitos iguais
 function validacaoCpf(cpf) {
   const cpfLimpo = normalizarCpf(cpf);
 
@@ -40,6 +41,7 @@ function validacaoCpf(cpf) {
   return resto === Number(cpfLimpo.charAt(10));
 }
 
+// Limpa a mensagem de erro específica do campo de CPF e remove o estado de erro do campo para permitir que o usuário corrija o CPF sem confusão, garantindo uma melhor experiência de usuário ao lidar com erros de validação
 function limparMensagemCpf() {
   const mensagemCpf = document
     .getElementById('cpf')
@@ -47,12 +49,18 @@ function limparMensagemCpf() {
   if (mensagemCpf) {
     mensagemCpf.textContent = '';
   }
+  const cpfInput = document.getElementById('cpf');
+  if (cpfInput && cpfInput.dataset) {
+    delete cpfInput.dataset.invalid;
+  }
 }
 
+// Retorna o elemento de mensagem de erro associado a um campo específico, assumindo que a estrutura HTML coloca a mensagem de erro como um elemento irmão dentro do mesmo contêiner pai do campo
 function obterMensagemErroDoCampo(campo) {
   return campo.parentElement.querySelector('.mensagem-erro');
 }
 
+// Limpa as mensagens de erro de todos os campos obrigatórios para evitar confusão ao corrigir os erros, garantindo que o usuário veja apenas as mensagens relevantes para os campos que ainda estão incorretos
 function limparMensagensObrigatorias() {
   document.querySelectorAll('.obrigatorio').forEach((campo) => {
     const mensagemErro = obterMensagemErroDoCampo(campo);
@@ -62,6 +70,7 @@ function limparMensagensObrigatorias() {
   });
 }
 
+// Verifica se os campos obrigatórios estão preenchidos e exibe mensagens de erro específicas para cada campo, retornando false se algum campo obrigatório estiver vazio ou true se todos estiverem preenchidos corretamente
 function validarCamposObrigatorios() {
   const camposObrigatorios = document.querySelectorAll('.obrigatorio');
   let formularioValido = true;
@@ -80,6 +89,7 @@ function validarCamposObrigatorios() {
   return formularioValido;
 }
 
+// Exibe uma mensagem de erro específica para o campo de CPF, garantindo que o usuário saiba exatamente qual campo está incorreto e possa corrigi-lo facilmente
 function exibirMensagemCpf(mensagem) {
   const mensagemCpf = document
     .getElementById('cpf')
@@ -89,14 +99,17 @@ function exibirMensagemCpf(mensagem) {
   }
 }
 
+// Retorna um array de alunos do localStorage ou um array vazio se não houver dados
 function obterAlunos() {
   return JSON.parse(localStorage.getItem('alunos')) || [];
 }
 
+// Salva o array de alunos no localStorage como uma string JSON
 function salvarAlunos(alunos) {
   localStorage.setItem('alunos', JSON.stringify(alunos));
 }
 
+// Preenche os campos do formulário com os dados do aluno encontrado, garantindo que o usuário veja as informações pré-preenchidas para facilitar a inscrição em um novo evento sem precisar digitar tudo novamente
 function preencherFormularioComAluno(aluno) {
   document.getElementById('nome').value = aluno.nome || '';
   document.getElementById('telefone').value = aluno.telefone || '';
@@ -108,6 +121,7 @@ function preencherFormularioComAluno(aluno) {
   document.getElementById('numero').value = aluno.numeroresidencia || '';
 }
 
+//Chama a função de normalização para garantir que o CPF seja comparado corretamente e retorna o aluno correspondente, ou null se não encontrado ou se o CPF for inválido, buscando do final para o início do array para encontrar a inscrição mais recente primeiro e evitar problemas com CPFs duplicados em inscrições antigas
 function buscarAlunoPorCpf(cpf) {
   const cpfLimpo = normalizarCpf(cpf);
   const alunos = obterAlunos();
@@ -121,6 +135,7 @@ function buscarAlunoPorCpf(cpf) {
   return null;
 }
 
+// Chama a função de normalização para garantir que o CPF seja comparado corretamente e preenche o formulário se um aluno correspondente for encontrado quando o campo de CPF perder o foco, ou seja, quando o usuário terminar de digitar o CPF e clicar fora do campo
 function preencherFormularioSeCpfExistente() {
   const cpfInput = document.getElementById('cpf');
   const cpf = cpfInput.value.trim();
@@ -135,6 +150,26 @@ function preencherFormularioSeCpfExistente() {
   }
 }
 
+// Verifica se há um evento selecionado salvo no localStorage e, se houver, seleciona a opção correspondente no dropdown de eventos e remove o item do localStorage para evitar seleção futura indesejada
+function selecionarEventoPorUrl() {
+  const selectEvento = document.getElementById('evento');
+  const eventoSalvo = localStorage.getItem('eventoSelecionadoInscricao');
+
+  if (!eventoSalvo || !selectEvento) {
+    return;
+  }
+
+  const opcaoExiste = Array.from(selectEvento.options).some(
+    (opcao) => opcao.value === eventoSalvo,
+  );
+
+  if (opcaoExiste) {
+    selectEvento.value = eventoSalvo;
+    localStorage.removeItem('eventoSelecionadoInscricao');
+  }
+}
+
+// Chama a função de normalização para garantir que o CPF seja comparado corretamente e exibe uma mensagem de erro se o CPF for inválido, ou limpa a mensagem de erro se for válido
 function validarCpfAoPreencher() {
   const cpfInput = document.getElementById('cpf');
   const cpf = cpfInput.value.trim();
@@ -145,14 +180,20 @@ function validarCpfAoPreencher() {
   }
 
   if (cpfLimpo.length < 11) {
+    exibirMensagemCpf('CPF inválido');
+    if (cpfInput && cpfInput.dataset) cpfInput.dataset.invalid = 'true';
     return;
   }
 
   if (!validacaoCpf(cpf)) {
     exibirMensagemCpf('CPF inválido');
+    if (cpfInput && cpfInput.dataset) cpfInput.dataset.invalid = 'true';
+  } else {
+    if (cpfInput && cpfInput.dataset) delete cpfInput.dataset.invalid;
   }
 }
 
+// Evita o comportamento padrão de envio do formulário para processar os dados manualmente, valida os campos obrigatórios e o CPF, verifica se o aluno já está cadastrado para o evento selecionado e, se tudo estiver correto, salva os dados do aluno no localStorage e limpa o formulário para uma nova inscrição
 function savealuno(event) {
   event.preventDefault();
 
@@ -163,12 +204,17 @@ function savealuno(event) {
   limparMensagensObrigatorias();
   limparMensagemCpf();
 
-  if (!validarCamposObrigatorios()) {
-    return;
+  let formularioValido = validarCamposObrigatorios();
+
+  if (
+    (cpfInput && cpfInput.dataset && cpfInput.dataset.invalid === 'true') ||
+    (cpf && !validacaoCpf(cpf))
+  ) {
+    exibirMensagemCpf('CPF inválido');
+    formularioValido = false;
   }
 
-  if (!validacaoCpf(cpf)) {
-    exibirMensagemCpf('CPF inválido');
+  if (!formularioValido) {
     return;
   }
 
@@ -204,9 +250,11 @@ function savealuno(event) {
   document.getElementById('inscricao-formulario').reset();
 }
 
+// Seleciona o formulário de inscrição e adiciona um evento de submit para processar a inscrição, além de adicionar eventos de input e blur para validação em tempo real dos campos obrigatórios e do CPF, garantindo que o usuário receba feedback imediato sobre os erros de preenchimento e possa corrigi-los antes de tentar enviar o formulário
 document.addEventListener('DOMContentLoaded', () => {
   const formulario = document.getElementById('inscricao-formulario');
 
+  selecionarEventoPorUrl();
   formulario.addEventListener('submit', savealuno);
 
   document.querySelectorAll('.obrigatorio').forEach((campo) => {

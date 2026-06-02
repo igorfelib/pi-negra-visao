@@ -1,19 +1,114 @@
-const modal = document.querySelector('#modal');
-const abrirBtn = document.querySelector('#abrirBtn');
-const fecharBtn = document.querySelector('#fecharBtn');
-const inscreverseBtn = document.querySelector('#inscreverseBtn');
+// Lista de eventos com título, valor para formulário, data e descrição
+const eventos = [
+  {
+    titulo: 'CAPOEIRA',
+    valorFormulario: 'capoeira',
+    meta: '14 Junho · 19:30',
+    texto:
+      'Vivência aberta com roda, música e movimento para celebrar a capoeira como prática de resistência, cultura e formação coletiva.',
+  },
+  {
+    titulo: 'colo de mãe',
+    valorFormulario: 'colo-de-mae',
+    meta: '29 - 30 Novembro · 18:30',
+    texto:
+      'Encontro dedicado ao acolhimento, à escuta e às vivências afetivas que fortalecem a comunidade a partir do cuidado.',
+  },
+  {
+    titulo: 'CINE VISÃO',
+    valorFormulario: 'cine-visao',
+    meta: '6 Novembro · 18:30',
+    texto:
+      'Sessão de cinema com conversa após a exibição, destacando narrativas negras e o poder do audiovisual como memória.',
+  },
+  {
+    titulo: 'Dança: samba rock',
+    valorFormulario: 'danca-samba-rock',
+    meta: '30 Novembro · 14:00',
+    texto:
+      'Oficina e baile para aprender passos, experimentar ritmos e celebrar o samba rock como expressão de identidade.',
+  },
+  {
+    titulo: 'Teatro: Ana julia',
+    valorFormulario: 'teatro-ana-julia',
+    meta: '12 Julho · 15:00',
+    texto:
+      'Apresentação teatral com foco em afeto, denúncia e reflexão sobre experiências do cotidiano e da vivência negra.',
+  },
+  {
+    titulo: 'QUINTA COLETIVA',
+    valorFormulario: 'quinta-coletiva',
+    meta: '13 Novembro · 19:00',
+    texto:
+      'Roda de encontro para diálogo, criação conjunta e fortalecimento da participação comunitária por meio da arte.',
+  },
+  {
+    titulo: 'aya yoga',
+    valorFormulario: 'aya-yoga',
+    meta: '16 Outubro · 19:00',
+    texto:
+      'Prática guiada de yoga com foco em respiração, presença e bem-estar para corpo e mente em um ambiente acolhedor.',
+  },
+];
 
-/* ========== MODAL ========== */
-if (abrirBtn && modal) {
-  abrirBtn.addEventListener('click', () => modal.showModal());
-}
+const modal = document.querySelector('#event-modal');
+const modalTitulo = document.querySelector('#event-modal-title');
+const modalMeta = document.querySelector('#event-modal-meta');
+const modalTexto = document.querySelector('#event-modal-text');
+const modalFechar = document.querySelector('.event-modal__close');
+const modalCta = document.querySelector('.event-modal__cta');
+const botoesSaibaMais = document.querySelectorAll('.card-eventos button');
 
-if (fecharBtn && modal) {
-  fecharBtn.addEventListener('click', () => modal.close());
-}
+// Adiciona um evento de clique ao botão de chamada para ação do modal para armazenar o valor do evento selecionado no localStorage, permitindo que a página de inscrição acesse essa informação para pré-selecionar o evento escolhido pelo usuário
+if (modalCta) {
+  modalCta.addEventListener('click', () => {
+    const eventoSelecionado = modalCta.dataset.evento;
 
-if (inscreverseBtn) {
-  inscreverseBtn.addEventListener('click', () => {
-    window.location.href = 'inscricao.html';
+    if (eventoSelecionado) {
+      localStorage.setItem('eventoSelecionadoInscricao', eventoSelecionado);
+    }
   });
 }
+
+// Obtém o evento correspondente ao índice do botão clicado e preenche o modal com as informações do evento, garantindo que o modal seja exibido corretamente mesmo que algum dado esteja faltando, e que a chamada para ação seja configurada apenas se houver um valor de formulário definido para o evento
+function abrirModalDoEvento(indice) {
+  const evento = eventos[indice];
+
+  if (!modal || !evento || !modalTitulo || !modalMeta || !modalTexto) {
+    return;
+  }
+
+  modalTitulo.textContent = evento.titulo;
+  modalMeta.textContent = evento.meta;
+  modalTexto.textContent = evento.texto;
+
+  if (modalCta && evento.valorFormulario) {
+    modalCta.href = './inscricao.html';
+    modalCta.dataset.evento = evento.valorFormulario;
+  }
+
+  modal.showModal();
+}
+
+// Adiciona um evento de clique ao botão de fechar do modal para fechar o modal quando clicado, garantindo que o modal seja fechado corretamente e que o usuário possa sair da visualização do evento sem problemas
+if (modal && modalFechar) {
+  modalFechar.addEventListener('click', () => modal.close());
+
+  modal.addEventListener('click', (event) => {
+    const rect = modal.getBoundingClientRect();
+    const clicouFora =
+      event.clientX < rect.left ||
+      event.clientX > rect.right ||
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom;
+
+    if (clicouFora) {
+      modal.close();
+    }
+  });
+}
+
+// Adiciona um evento de clique a cada botão "Saiba mais" para abrir o modal com as informações do evento correspondente, garantindo que cada botão abra o modal correto com base no índice do evento na lista de eventos
+botoesSaibaMais.forEach((botao, indice) => {
+  botao.addEventListener('click', () => abrirModalDoEvento(indice));
+});
