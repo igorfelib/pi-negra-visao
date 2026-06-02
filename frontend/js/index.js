@@ -1,3 +1,4 @@
+// Lista de eventos com título, valor para formulário, data e descrição
 const eventos = [
   {
     titulo: 'CAPOEIRA',
@@ -58,6 +59,7 @@ const modalFechar = document.querySelector('.event-modal__close');
 const modalCta = document.querySelector('.event-modal__cta');
 const botoesSaibaMais = document.querySelectorAll('.card-eventos button');
 
+// Adiciona um evento de clique ao botão de chamada para ação do modal para armazenar o valor do evento selecionado no localStorage, permitindo que a página de inscrição acesse essa informação para pré-selecionar o evento escolhido pelo usuário
 if (modalCta) {
   modalCta.addEventListener('click', () => {
     const eventoSelecionado = modalCta.dataset.evento;
@@ -68,6 +70,7 @@ if (modalCta) {
   });
 }
 
+// Obtém o evento correspondente ao índice do botão clicado e preenche o modal com as informações do evento, garantindo que o modal seja exibido corretamente mesmo que algum dado esteja faltando, e que a chamada para ação seja configurada apenas se houver um valor de formulário definido para o evento
 function abrirModalDoEvento(indice) {
   const evento = eventos[indice];
 
@@ -87,6 +90,7 @@ function abrirModalDoEvento(indice) {
   modal.showModal();
 }
 
+// Adiciona um evento de clique ao botão de fechar do modal para fechar o modal quando clicado, garantindo que o modal seja fechado corretamente e que o usuário possa sair da visualização do evento sem problemas
 if (modal && modalFechar) {
   modalFechar.addEventListener('click', () => modal.close());
 
@@ -104,6 +108,7 @@ if (modal && modalFechar) {
   });
 }
 
+// Adiciona um evento de clique a cada botão "Saiba mais" para abrir o modal com as informações do evento correspondente, garantindo que cada botão abra o modal correto com base no índice do evento na lista de eventos
 botoesSaibaMais.forEach((botao, indice) => {
   botao.addEventListener('click', () => abrirModalDoEvento(indice));
 });
