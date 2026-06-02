@@ -36,10 +36,10 @@
 }
 
 #eventos::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../img/mudcloth.svg');
+  background-image: url("../img/mudcloth.svg");
   background-repeat: repeat;
   opacity: 0.045;
   pointer-events: none;
@@ -131,6 +131,96 @@
   height: auto;
 }
 
+.event-modal {
+  width: min(92vw, 42rem);
+  border: none;
+  padding: 0;
+  background: transparent;
+}
+
+.event-modal::backdrop {
+  background: rgba(14, 12, 10, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.event-modal__content {
+  position: relative;
+  background: linear-gradient(180deg, #fff8ef 0%, #f7ebdb 100%);
+  color: var(--preto);
+  border-top: 0.5rem solid var(--laranja);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  padding: 2rem;
+}
+
+.event-modal__eyebrow {
+  display: inline-block;
+  color: var(--laranja);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.event-modal__content h3 {
+  font-family: var(--font-space);
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 0.95;
+  margin-bottom: 0.85rem;
+}
+
+.event-modal__meta {
+  font-weight: 700;
+  color: var(--marrom);
+  margin-bottom: 1rem;
+}
+
+.event-modal__content p:last-of-type {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--marrom);
+}
+
+.event-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--preto);
+  color: var(--bg);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.event-modal__actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1.5rem;
+}
+
+.event-modal__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.85rem 1.4rem;
+  background: var(--laranja);
+  color: var(--bg-card-claro);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.event-modal__cta:hover {
+  background: #d97706;
+}
+
 /* ===== HERO ===== */
 
 #hero {
@@ -141,10 +231,10 @@
 }
 
 #hero::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../img/adinkra.svg');
+  background-image: url("../img/adinkra.svg");
   background-repeat: repeat;
   opacity: 0.07;
   pointer-events: none;
@@ -193,10 +283,10 @@
 }
 
 #quem-somos::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../img/mudcloth.svg');
+  background-image: url("../img/mudcloth.svg");
   background-repeat: repeat;
   opacity: 0.045;
   pointer-events: none;
@@ -256,10 +346,10 @@
 }
 
 #podcast::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../img/ankara.svg');
+  background-image: url("../img/ankara.svg");
   background-repeat: repeat;
   background-size: 140px;
   opacity: 0.1;
@@ -287,10 +377,10 @@
 }
 
 #memorial-negro::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../img/adinkra.svg');
+  background-image: url("../img/adinkra.svg");
   background-repeat: repeat;
   opacity: 0.07;
   pointer-events: none;
@@ -326,10 +416,10 @@
 }
 
 #biblioteca::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../img/adinkra.svg');
+  background-image: url("../img/adinkra.svg");
   background-repeat: repeat;
   opacity: 0.07;
   pointer-events: none;
@@ -337,7 +427,7 @@
 
 #biblioteca::after {
   background-color: rgba(67, 67, 252, 0.811);
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   opacity: 0.5;
@@ -434,6 +524,15 @@
     padding-block: 2.5rem;
   }
 
+  .event-modal__content {
+    padding: 1.5rem;
+  }
+
+  .event-modal__close {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
   .podcast-direita img {
     width: min(70%, 26rem);
   }
@@ -504,6 +603,14 @@
     gap: 0.7rem;
     padding: 0.9rem 1rem;
     font-size: 0.92rem;
+  }
+
+  .event-modal {
+    width: 94vw;
+  }
+
+  .event-modal__content h3 {
+    padding-right: 2rem;
   }
 
   .podcast-direita img {

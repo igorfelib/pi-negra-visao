@@ -122,7 +122,7 @@
           <div class="card-eventos">
             <h3>colo de mãe</h3>
             <div>
-              <p><img src="img/calendar.svg" /> 29 Novembro - 30 Novembro</p>
+              <p><img src="img/calendar.svg" /> 29 - 30 Novembro</p>
               <p><img src="img/clock.svg" /> 18:30</p>
             </div>
             <img src="img/encontro_de_mae.jpg" />
@@ -187,6 +187,30 @@
           </div>
         </div>
       </section>
+
+      <dialog
+        id="event-modal"
+        class="event-modal"
+        aria-labelledby="event-modal-title"
+        aria-describedby="event-modal-text"
+      >
+        <div class="event-modal__content">
+          <button
+            type="button"
+            class="event-modal__close"
+            aria-label="Fechar modal"
+          >
+            &times;
+          </button>
+          <span class="event-modal__eyebrow">· evento ·</span>
+          <h3 id="event-modal-title"></h3>
+          <p class="event-modal__meta" id="event-modal-meta"></p>
+          <p id="event-modal-text"></p>
+          <div class="event-modal__actions">
+            <a href="./inscricao.html" class="event-modal__cta">Inscreva-se</a>
+          </div>
+        </div>
+      </dialog>
 
       <div id="linhaDivisoria"></div>
 
