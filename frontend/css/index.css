@@ -136,6 +136,7 @@
   border: none;
   padding: 0;
   background: transparent;
+  margin: auto;
 }
 
 .event-modal::backdrop {
