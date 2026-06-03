@@ -192,7 +192,7 @@ function renderizarAlunos() {
   alunos = JSON.parse(localStorage.getItem('alunos')) || [];
 
   // Apenas itera o array de alunos salvo pelo inscricao.js e joga na tela
-  alunos.forEach((aluno) => {
+  alunos.forEach((aluno, i) => {
     // Se a chave do evento não existir ainda no objeto aluno, exibe 'Indefinido'
     let eventoInscrito = aluno.evento ? aluno.evento : 'Indefinido/Nenhum';
 
@@ -203,7 +203,18 @@ function renderizarAlunos() {
                 <td>${aluno.telefone}</td>
                 <td>${aluno.email}</td>
                 <td><strong>${eventoInscrito}</strong></td>
+                <td>
+                    <button class="btn-tabela btn-excluir" onclick="excluirAluno(${i})">Excluir</button>
+                </td>
             </tr>
         `;
   });
+}
+
+function excluirAluno(i) {
+  if (confirm('Excluir este aluno?')) {
+    alunos.splice(i, 1);
+    localStorage.setItem('alunos', JSON.stringify(alunos));
+    renderizarAlunos();
+  }
 }
