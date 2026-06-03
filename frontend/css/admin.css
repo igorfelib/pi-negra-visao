@@ -1,9 +1,12 @@
+body {
+  background-color: var(--bg);
+}
+
 /* Container principal do Painel */
 .container-admin {
   padding: 2rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: var(--bg);
 }
 
 .container-admin h1 {
