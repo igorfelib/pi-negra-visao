@@ -2,6 +2,9 @@
 function normalizarCpf(cpf) {
   return cpf.replace(/\D/g, '');
 }
+
+// Guarda se o CPF está com erro para a validação do envio do formulário
+let cpfTemErro = false;
 // Chama a função de normalização para garantir que o CPF seja comparado corretamente e verifica se o CPF é válido, retornando true se for válido ou false se for inválido, seguindo as regras de validação do CPF, incluindo a verificação dos dígitos verificadores e evitando CPFs com todos os dígitos iguais
 function validacaoCpf(cpf) {
   const cpfLimpo = normalizarCpf(cpf);
@@ -41,7 +44,7 @@ function validacaoCpf(cpf) {
   return resto === Number(cpfLimpo.charAt(10));
 }
 
-// Limpa a mensagem de erro específica do campo de CPF e remove o estado de erro do campo para permitir que o usuário corrija o CPF sem confusão, garantindo uma melhor experiência de usuário ao lidar com erros de validação
+// Limpa a mensagem de erro específica do campo de CPF e remove o estado de erro do campo para permitir que o usuário corrija o CPF sem confusão
 function limparMensagemCpf() {
   const mensagemCpf = document
     .getElementById('cpf')
@@ -49,10 +52,7 @@ function limparMensagemCpf() {
   if (mensagemCpf) {
     mensagemCpf.textContent = '';
   }
-  const cpfInput = document.getElementById('cpf');
-  if (cpfInput && cpfInput.dataset) {
-    delete cpfInput.dataset.invalid;
-  }
+  cpfTemErro = false;
 }
 
 // Retorna o elemento de mensagem de erro associado a um campo específico, assumindo que a estrutura HTML coloca a mensagem de erro como um elemento irmão dentro do mesmo contêiner pai do campo
@@ -60,7 +60,7 @@ function obterMensagemErroDoCampo(campo) {
   return campo.parentElement.querySelector('.mensagem-erro');
 }
 
-// Limpa as mensagens de erro de todos os campos obrigatórios para evitar confusão ao corrigir os erros, garantindo que o usuário veja apenas as mensagens relevantes para os campos que ainda estão incorretos
+// Limpa as mensagens de erro de todos os campos obrigatórios para evitar confusão ao corrigir os erros
 function limparMensagensObrigatorias() {
   document.querySelectorAll('.obrigatorio').forEach((campo) => {
     const mensagemErro = obterMensagemErroDoCampo(campo);
@@ -89,7 +89,7 @@ function validarCamposObrigatorios() {
   return formularioValido;
 }
 
-// Exibe uma mensagem de erro específica para o campo de CPF, garantindo que o usuário saiba exatamente qual campo está incorreto e possa corrigi-lo facilmente
+// Exibe uma mensagem de erro específica para o campo de CPF
 function exibirMensagemCpf(mensagem) {
   const mensagemCpf = document
     .getElementById('cpf')
@@ -109,7 +109,7 @@ function salvarAlunos(alunos) {
   localStorage.setItem('alunos', JSON.stringify(alunos));
 }
 
-// Preenche os campos do formulário com os dados do aluno encontrado, garantindo que o usuário veja as informações pré-preenchidas para facilitar a inscrição em um novo evento sem precisar digitar tudo novamente
+// Preenche os campos do formulário com os dados do aluno encontrado
 function preencherFormularioComAluno(aluno) {
   document.getElementById('nome').value = aluno.nome || '';
   document.getElementById('telefone').value = aluno.telefone || '';
@@ -181,15 +181,15 @@ function validarCpfAoPreencher() {
 
   if (cpfLimpo.length < 11) {
     exibirMensagemCpf('CPF inválido');
-    if (cpfInput && cpfInput.dataset) cpfInput.dataset.invalid = 'true';
+    cpfTemErro = true;
     return;
   }
 
   if (!validacaoCpf(cpf)) {
     exibirMensagemCpf('CPF inválido');
-    if (cpfInput && cpfInput.dataset) cpfInput.dataset.invalid = 'true';
+    cpfTemErro = true;
   } else {
-    if (cpfInput && cpfInput.dataset) delete cpfInput.dataset.invalid;
+    cpfTemErro = false;
   }
 }
 
@@ -206,10 +206,7 @@ function savealuno(event) {
 
   let formularioValido = validarCamposObrigatorios();
 
-  if (
-    (cpfInput && cpfInput.dataset && cpfInput.dataset.invalid === 'true') ||
-    (cpf && !validacaoCpf(cpf))
-  ) {
+  if (cpfTemErro || (cpf && !validacaoCpf(cpf))) {
     exibirMensagemCpf('CPF inválido');
     formularioValido = false;
   }
