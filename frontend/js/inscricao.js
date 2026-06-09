@@ -245,6 +245,7 @@ function savealuno(event) {
   alunos.push(valor);
   salvarAlunos(alunos);
   document.getElementById('inscricao-formulario').reset();
+  alert('Inscrição realizada com sucesso!');
 }
 
 // Seleciona o formulário de inscrição e adiciona um evento de submit para processar a inscrição, além de adicionar eventos de input e blur para validação em tempo real dos campos obrigatórios e do CPF, garantindo que o usuário receba feedback imediato sobre os erros de preenchimento e possa corrigi-los antes de tentar enviar o formulário
