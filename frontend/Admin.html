@@ -121,10 +121,6 @@
               <input type="date" id="evento-data-inicio" required />
             </div>
             <div class="campo-form">
-              <label for="evento-data-fim">Data Fim *</label>
-              <input type="date" id="evento-data-fim" required />
-            </div>
-            <div class="campo-form">
               <label for="evento-horario">Horário *</label>
               <input type="time" id="evento-horario" required />
             </div>
@@ -147,23 +143,30 @@
               <input type="number" id="evento-capacidade" min="1" required />
             </div>
             <div class="campo-form">
-              <label for="evento-recorrente">É Recorrente? *</label>
-              <select id="evento-recorrente" required>
-                <option value="Não">Não</option>
-                <option value="Sim">Sim</option>
+              <label for="evento-frequencia">Frequência *</label>
+              <select id="evento-frequencia" required>
+                <option value="">Selecione...</option>
+                <option value="Único">Único - sem repetição</option>
+                <option value="2x">2x - duas repetições</option>
+                <option value="3x">3x - três repetições</option>
+                <option value="4x">4x - quatro repetições</option>
+                <option value="5x">5x - cinco repetições</option>
+                <option value="6x">6x - seis repetições</option>
+                <option value="7x">7x - sete repetições</option>
+                <option value="8x">8x - oito repetições</option>
+                <option value="9x">9x - nove repetições</option>
+                <option value="10x">10x - dez repetições</option>
+                <option value="Sempre">Sempre - contínuo</option>
               </select>
             </div>
             <div class="campo-form">
-              <label for="evento-dias">Dia da Semana</label>
-              <select id="evento-dias">
-                <option value="">Nenhum/Único</option>
-                <option value="Segunda-feira">Segunda-feira</option>
-                <option value="Terça-feira">Terça-feira</option>
-                <option value="Quarta-feira">Quarta-feira</option>
-                <option value="Quinta-feira">Quinta-feira</option>
-                <option value="Sexta-feira">Sexta-feira</option>
-                <option value="Sábado">Sábado</option>
-                <option value="Domingo">Domingo</option>
+              <label for="evento-recorrencia">Recorrência *</label>
+              <select id="evento-recorrencia" required>
+                <option value="">Selecione...</option>
+                <option value="Diário">Diário</option>
+                <option value="Semanal">Semanal</option>
+                <option value="Quinzenal">Quinzenal</option>
+                <option value="Mensal">Mensal</option>
               </select>
             </div>
           </div>
@@ -180,8 +183,10 @@
               <tr>
                 <th>Nome</th>
                 <th>Responsável</th>
-                <th>Período</th>
+                <th>Data Início</th>
                 <th>Horário</th>
+                <th>Frequência</th>
+                <th>Recorrência</th>
                 <th>Vagas</th>
                 <th>Ações</th>
               </tr>
