@@ -184,7 +184,7 @@ function renderizarEventos() {
   corpo.innerHTML = '';
 
   eventos.forEach((ev, i) => {
-    let recorrencia = ev.recorrencia || 'Não informado';
+    let recorrencia = ev.recorrencia || '-'; //utilizado para eventos sem recorrencia
     let frequencia = ev.frequencia || 'Não informado';
     let dataInicio = formatarDataDisplay(ev.dataInicio);
 
