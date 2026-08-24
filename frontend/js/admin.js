@@ -6,6 +6,43 @@ let responsaveis = JSON.parse(localStorage.getItem('nv_responsaveis')) || [];
 let eventos = JSON.parse(localStorage.getItem('nv_eventos')) || [];
 let alunos = JSON.parse(localStorage.getItem('alunos')) || []; // Chave usada no inscricao.js
 
+function normalizarEventos(eventosSalvos) {
+  return eventosSalvos.map((evento) => ({
+    nome: evento.nome || '',
+    responsavel: evento.responsavel || '',
+    descricao: evento.descricao || '',
+    dataInicio: evento.dataInicio || '',
+    horario: evento.horario || '',
+    inscInicio: evento.inscInicio || '',
+    inscFim: evento.inscFim || '',
+    capacidade: evento.capacidade || '',
+    recorrencia: evento.recorrencia || '',
+    frequencia: evento.frequencia || '',
+  }));
+}
+
+function formatarDataDisplay(isoDate) {
+  if (!isoDate) return 'Não informado';
+  const parts = isoDate.split('-');
+  if (parts.length !== 3) return isoDate;
+  return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+function atualizarEstadoRecorrencia() {
+  let frequencia = document.getElementById('evento-frequencia');
+  let recorrencia = document.getElementById('evento-recorrencia');
+
+  if (!frequencia || !recorrencia) {
+    return;
+  }
+
+  let unico = frequencia.value === 'Único';
+  recorrencia.disabled = unico;
+}
+
+eventos = normalizarEventos(eventos);
+localStorage.setItem('nv_eventos', JSON.stringify(eventos));
+
 document.addEventListener('DOMContentLoaded', () => {
   // Escuta os botões de envio dos formulários
   document
@@ -14,10 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
   document
     .getElementById('form-evento')
     .addEventListener('submit', salvarEvento);
+  document
+    .getElementById('evento-frequencia')
+    .addEventListener('change', atualizarEstadoRecorrencia);
 
   // Roda as funções de tela logo que a página carrega
   renderizarResponsaveis();
   atualizarSelectResponsaveis();
+  atualizarEstadoRecorrencia();
   renderizarEventos();
   renderizarAlunos();
 });
@@ -117,13 +158,12 @@ function salvarEvento(e) {
     responsavel: document.getElementById('evento-responsavel').value,
     descricao: document.getElementById('evento-descricao').value,
     dataInicio: document.getElementById('evento-data-inicio').value,
-    dataFim: document.getElementById('evento-data-fim').value,
     horario: document.getElementById('evento-horario').value,
     inscInicio: document.getElementById('evento-insc-inicio').value,
     inscFim: document.getElementById('evento-insc-fim').value,
     capacidade: document.getElementById('evento-capacidade').value,
-    recorrente: document.getElementById('evento-recorrente').value,
-    diaDaSemana: document.getElementById('evento-dias').value,
+    recorrencia: document.getElementById('evento-recorrencia').value,
+    frequencia: document.getElementById('evento-frequencia').value,
   };
 
   if (index === '') {
@@ -135,6 +175,7 @@ function salvarEvento(e) {
 
   localStorage.setItem('nv_eventos', JSON.stringify(eventos));
   document.getElementById('form-evento').reset();
+  atualizarEstadoRecorrencia();
   renderizarEventos();
 }
 
@@ -143,19 +184,25 @@ function renderizarEventos() {
   corpo.innerHTML = '';
 
   eventos.forEach((ev, i) => {
+    let recorrencia = ev.recorrencia || '-'; //utilizado para eventos sem recorrencia
+    let frequencia = ev.frequencia || 'Não informado';
+    let dataInicio = formatarDataDisplay(ev.dataInicio);
+
     corpo.innerHTML += `
-            <tr>
-                <td>${ev.nome}</td>
-                <td>${ev.responsavel}</td>
-                <td>${ev.dataInicio} até ${ev.dataFim}</td>
-                <td>${ev.horario} ${ev.recorrente === 'Sim' ? '(' + ev.diaDaSemana + ')' : ''}</td>
-                <td>${ev.capacidade}</td>
-                <td>
-                    <button class="btn-tabela btn-editar" onclick="editarEvento(${i})">Editar</button>
-                    <button class="btn-tabela btn-excluir" onclick="excluirEvento(${i})">Excluir</button>
-                </td>
-            </tr>
-        `;
+        <tr>
+          <td>${ev.nome}</td>
+          <td>${ev.responsavel}</td>
+          <td>${dataInicio}</td>
+          <td>${ev.horario}</td>
+          <td>${frequencia}</td>
+          <td>${recorrencia}</td>
+          <td>${ev.capacidade}</td>
+          <td>
+            <button class="btn-tabela btn-editar" onclick="editarEvento(${i})">Editar</button>
+            <button class="btn-tabela btn-excluir" onclick="excluirEvento(${i})">Excluir</button>
+          </td>
+        </tr>
+      `;
   });
 }
 
@@ -165,13 +212,15 @@ function editarEvento(i) {
   document.getElementById('evento-responsavel').value = eventos[i].responsavel;
   document.getElementById('evento-descricao').value = eventos[i].descricao;
   document.getElementById('evento-data-inicio').value = eventos[i].dataInicio;
-  document.getElementById('evento-data-fim').value = eventos[i].dataFim;
   document.getElementById('evento-horario').value = eventos[i].horario;
   document.getElementById('evento-insc-inicio').value = eventos[i].inscInicio;
   document.getElementById('evento-insc-fim').value = eventos[i].inscFim;
   document.getElementById('evento-capacidade').value = eventos[i].capacidade;
-  document.getElementById('evento-recorrente').value = eventos[i].recorrente;
-  document.getElementById('evento-dias').value = eventos[i].diaDaSemana;
+  document.getElementById('evento-recorrencia').value =
+    eventos[i].recorrencia || '';
+  document.getElementById('evento-frequencia').value =
+    eventos[i].frequencia || '';
+  atualizarEstadoRecorrencia();
 }
 
 function excluirEvento(i) {
@@ -192,7 +241,7 @@ function renderizarAlunos() {
   alunos = JSON.parse(localStorage.getItem('alunos')) || [];
 
   // Apenas itera o array de alunos salvo pelo inscricao.js e joga na tela
-  alunos.forEach((aluno) => {
+  alunos.forEach((aluno, i) => {
     // Se a chave do evento não existir ainda no objeto aluno, exibe 'Indefinido'
     let eventoInscrito = aluno.evento ? aluno.evento : 'Indefinido/Nenhum';
 
@@ -203,7 +252,18 @@ function renderizarAlunos() {
                 <td>${aluno.telefone}</td>
                 <td>${aluno.email}</td>
                 <td><strong>${eventoInscrito}</strong></td>
+                <td>
+                    <button class="btn-tabela btn-excluir" onclick="excluirAluno(${i})">Excluir</button>
+                </td>
             </tr>
         `;
   });
+}
+
+function excluirAluno(i) {
+  if (confirm('Excluir este aluno?')) {
+    alunos.splice(i, 1);
+    localStorage.setItem('alunos', JSON.stringify(alunos));
+    renderizarAlunos();
+  }
 }
