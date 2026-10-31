@@ -4,32 +4,32 @@
 
 # Negra Visão
 
-Plataforma web desenvolvida como Projeto Integrador da FATEC Atibaia para apoiar a divulgação das ações da Associação Negra Visão e demonstrar o fluxo de inscrição em eventos, o cadastro de responsáveis e a gestão básica de atividades.
+Projeto Integrador da FATEC Atibaia para apoiar a divulgação de eventos da Associação Negra Visão e documentar o fluxo de inscrição, a gestão interna e a modelagem de dados.
 
 > Projeto acadêmico em desenvolvimento. A versão atual é um protótipo front-end e não deve ser usada para armazenar dados reais ou sensíveis.
 
 ## Sobre o projeto
 
-A Associação Negra Visão atua em Atibaia, São Paulo, na difusão da cultura preta, no fortalecimento da identidade negra e no combate ao racismo. O projeto propõe um canal digital centralizado para apresentar a instituição, divulgar eventos e simplificar a inscrição da comunidade.
+A Associação Negra Visão atua em Atibaia, São Paulo, na difusão da cultura preta, no fortalecimento da identidade negra e no combate ao racismo. O projeto especifica uma página pública para consulta e inscrição em eventos e um painel interno para a equipe da associação.
 
-O protótipo também inclui uma área administrativa demonstrativa para cadastrar responsáveis e eventos e consultar as inscrições salvas no navegador.
+O repositório contém um protótipo front-end demonstrativo e a documentação do sistema. O memorial de banco de dados está finalizado; a aplicação ainda não possui servidor nem integração com esse banco.
 
 ## Estado atual
 
 | Área | Situação | O que está disponível |
 | --- | --- | --- |
-| Portal institucional | Implementada | Apresentação da associação, agenda de eventos, memorial, biblioteca e conteúdo cultural |
-| Inscrição em eventos | Implementada no protótipo | Seleção do evento, validação de campos e CPF, preenchimento automático de cadastro existente e bloqueio de inscrição duplicada no mesmo evento |
-| Painel administrativo | Implementado no protótipo | Cadastro, edição e exclusão de responsáveis e eventos; consulta e exclusão de inscrições |
-| Persistência | Local | Dados armazenados no `localStorage` do navegador |
-| Integrações e serviços | Planejados | Banco de dados, autenticação segura, envio de e-mail, validação de presença e exportação de relatórios |
+| Documentação do sistema | Atualizada | Requisitos, casos de uso, diagramas, protótipos e modelo de classes em PI_NegraVisao_v16.docx |
+| Protótipo front-end | Demonstrativo | Páginas públicas e painel interno; não implementa todas as regras aprovadas na documentação |
+| Persistência do protótipo | Local | Dados armazenados somente no `localStorage` do navegador |
+| Memorial e modelo de dados | Finalizados | Memorial, MER, script SQL e dicionários de dados disponíveis em `banco de dados/` |
+| Backend e integração com banco | Não implementados | O protótipo não deve ser usado para cadastrar dados reais ou sensíveis |
 
 ## Funcionalidades
 
 - Página inicial responsiva com identidade visual da Negra Visão.
 - Cards de eventos com modal de detalhes e acesso ao formulário de inscrição.
 - Formulário com validação de CPF e campos obrigatórios.
-- Reaproveitamento dos dados de um participante já cadastrado no navegador.
+- Demonstração do reaproveitamento de dados de uma pessoa já cadastrada no navegador.
 - Bloqueio de inscrições repetidas para o mesmo CPF e evento.
 - Login demonstrativo para acesso ao painel administrativo.
 - Cadastro e manutenção de responsáveis e eventos.
@@ -70,7 +70,8 @@ As credenciais estão no código-fonte e servem apenas para demonstração acad�
 
 ```text
 pi-negra-visao/
-├── docs/                  # Documentação do Projeto Integrador
+├── docs/                  # Documentação do Projeto Integrador e diagramas
+├── banco de dados/        # Memorial final, MER, SQL e dicionários de dados
 ├── frontend/
 │   ├── css/               # Estilos das páginas
 │   ├── img/               # Logotipos, padrões e imagens de eventos
@@ -79,7 +80,6 @@ pi-negra-visao/
 │   ├── inscricao.html     # Formulário de inscrição
 │   ├── login.html         # Login demonstrativo
 │   └── Admin.html         # Painel administrativo
-├── LICENSE
 └── README.md
 ```
 
@@ -87,7 +87,7 @@ pi-negra-visao/
 
 O protótipo mantém os dados somente no navegador:
 
-- `alunos`: inscrições e dados dos participantes;
+- `alunos`: chave legada do protótipo para dados de pessoas e inscrições; na documentação atual, o termo de domínio é participante;
 - `nv_responsaveis`: responsáveis cadastrados;
 - `nv_eventos`: eventos cadastrados;
 - `eventoSelecionadoInscricao`: evento escolhido antes de abrir o formulário.
@@ -96,18 +96,21 @@ Limpar os dados do site no navegador remove esses registros. Como ainda não há
 
 ## Documentação
 
-- [Documentação revisada do Projeto Integrador](docs/PI_NegraVisao_v3.docx)
-- [Versão anterior](docs/PI_NegraVisao_v2.docx)
+- [Projeto Integrador — versão 16](docs/PI_NegraVisao_v16.docx)
+- [Memorial final de implementação do banco de dados](<banco de dados/banco de dados Negra visao v2.docx>)
+- [Modelo entidade-relacionamento em PNG](<banco de dados/MER.png>) · [em SVG](<banco de dados/MER.svg>)
+- [Script SQL](<banco de dados/sql_V1.sql>)
+- [Dicionário semântico de dados](<banco de dados/Dicionario_Dados_Semantico_Negra_Visao_Compatível_SQL.xlsx>)
+- [Dicionário técnico de dados](<banco de dados/Dicionario_Dados_Tecnico_Negra_Visao_Compatível_SQL.xlsx>)
+- [Diagrama de classes em SVG](docs/diagrama_classes_negra_visao.svg)
+- [Relatório histórico da revisão da V2](docs/Relatorio_Revisao_PI_NegraVisao_v2.md)
 
 ## Próximas etapas
 
-- Implementar API e banco de dados.
-- Substituir o login demonstrativo por autenticação e autorização por perfil.
-- Aplicar regras de capacidade, período de inscrição e conflito de horários.
-- Enviar confirmação e código de inscrição por e-mail.
-- Registrar presença sem excluir o histórico do participante.
-- Exportar relatórios de inscritos e presença.
-- Adicionar testes automatizados, validações de segurança e adequação à LGPD.
+- Implementar backend, autenticação interna e integração com o modelo de dados final.
+- Alinhar o protótipo às regras de inscrição, capacidade, recorrência, cancelamento e presença.
+- Implementar relatórios administrativos com acesso restrito ao perfil administrador.
+- Aplicar controles de segurança e privacidade antes de qualquer uso com dados reais.
 
 ## Equipe
 
@@ -117,6 +120,3 @@ Limpar os dados do site no navegador remove esses registros. Como ainda não há
 - Marisol E. F. Sawaya
 - Victor Lyan Fronio Oliveira
 
-## Licença
-
-Este projeto está disponível sob a [Licença MIT](LICENSE).
