@@ -1,0 +1,198 @@
+@model IEnumerable<EventoPublicoViewModel>
+@{
+    ViewData["Title"] = "Início";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/index.js" asp-append-version="true" defer></script>
+}
+
+<main>
+  <div id="linhaDivisoria"></div>
+
+  <!-- =========== HERO ========== -->
+  <section id="hero">
+    <span class="subtitulo">· ATIBAIA, SÃO PAULO · DESDE 2018 </span>
+    <h2 class="hero-titulo">
+      A CULTURA
+      <span>PRETA</span>
+      É
+      <span>RESISTÊNCIA.</span>
+    </h2>
+    <p class="hero-texto">
+      A <strong>Negra Visão</strong> é uma associação cultural de Atibaia-SP
+      que luta pela difusão da cultura preta, pelo fortalecimento da
+      identidade negra e pelo combate ao racismo, através da arte, da
+      memória e da mobilização coletiva.
+    </p>
+  </section>
+
+  <div id="linhaDivisoria"></div>
+
+  <!-- ========== QUEM SOMOS ========== -->
+  <section id="quem-somos">
+    <div class="quemSomos-esquerda">
+      <span class="subtitulo">· QUEM SOMOS </span>
+      <h2 class="titulo-secao">
+        NÃO SOMOS
+        <span>APÊNDICE.</span>
+        <span>SOMOS CENTRO</span>
+      </h2>
+      <p class="quemSomos-texto">
+        Por séculos, a contribuição negra foi apagada, folclorizada ou
+        reduzida a datas de calendário. A Negra Visão nasceu para inverter
+        essa lógica, colocando a cultura, a história e a voz negra no centro
+        da vida cultural de Atibaia.
+      </p>
+    </div>
+    <div class="quemSomos-direita">
+      <div class="quem-item">
+        <span>01</span>
+        <p>Existir é um ato político.</p>
+      </div>
+      <div class="quem-item">
+        <span>02</span>
+        <p>Celebrar é uma forma de resistir.</p>
+      </div>
+      <div class="quem-item">
+        <span>03</span>
+        <p>Educar é transformar.</p>
+      </div>
+      <div class="quem-item">
+        <span>04</span>
+        <p>A memória ancestral é tecnologia.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="linhaDivisoria"></div>
+
+  <!-- ========== EVENTOS ========== -->
+  <section id="eventos">
+    <h2>EVENTOS</h2>
+
+    @if (ViewBag.AvisoBanco != null)
+    {
+        <p style="margin-top: 1rem; padding: 1rem; background: #fff3cd; border-left: 4px solid var(--laranja); font-weight: 600;">
+            @ViewBag.AvisoBanco
+        </p>
+    }
+
+    <div class="card-container">
+      @if (Model != null && Model.Any())
+      {
+          foreach (var ev in Model)
+          {
+              <div class="card-eventos">
+                <h3>@ev.Titulo</h3>
+                <div>
+                  <p><img src="~/img/calendar.svg" alt="" /> @ev.DataExibicao</p>
+                  <p><img src="~/img/clock.svg" alt="" /> @ev.HorarioExibicao</p>
+                  <p style="font-size: 0.85rem; margin-top: 0.25rem; color: @(ev.InscricoesAbertas ? "var(--verde)" : "var(--vermelho)");">
+                    @ev.StatusInscricaoTexto
+                  </p>
+                </div>
+                <img src="@ev.ImagemUrl" alt="@ev.Titulo" />
+                <button
+                  type="button"
+                  class="btn-saiba-mais"
+                  data-evento-id="@ev.EventoId"
+                  data-titulo="@ev.Titulo"
+                  data-meta="@ev.MetaModal"
+                  data-texto="@ev.Descricao"
+                  data-abertas="@(ev.InscricoesAbertas ? "true" : "false")">
+                  SAIBA MAIS <img src="~/img/arrow-right.svg" alt="" />
+                </button>
+              </div>
+          }
+      }
+      else
+      {
+          <div class="card-eventos">
+            <h3>Nenhum evento publicado no momento</h3>
+            <p>Consulte novamente em breve ou acesse o painel administrativo para publicar novos eventos.</p>
+          </div>
+      }
+    </div>
+  </section>
+
+  <dialog id="event-modal" class="event-modal" closedby="any" aria-labelledby="event-modal-title">
+    <div class="event-modal__content">
+      <button type="button" class="event-modal__close" aria-label="Fechar detalhes do evento">&times;</button>
+      <span class="event-modal__eyebrow">· evento ·</span>
+      <h3 id="event-modal-title"></h3>
+      <p class="event-modal__meta" id="event-modal-meta"></p>
+      <p id="event-modal-text"></p>
+      <div class="event-modal__actions">
+        <a id="event-modal-cta" href="@Url.Action("Index", "Inscricao")" class="event-modal__cta">Inscreva-se</a>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="linhaDivisoria"></div>
+
+  <!-- =========== PODCAST =========== -->
+  <section id="podcast">
+    <div class="podcast-esquerda">
+      <span class="subtitulo">· PODCAST </span>
+      <h2 class="titulo-secao">
+        IDENTIDADE NEGRA
+        <span>NA PERIFERIA</span>
+        BRASILEIRA
+      </h2>
+      <p class="quemSomos-texto">
+        Neste episódio, conversamos com a pesquisadora e ativista Dra.
+        Camila Nascimento sobre como a juventude negra periférica reconstrói
+        sua identidade através da arte, do rap e da organização comunitária.
+      </p>
+    </div>
+    <div class="podcast-direita">
+      <img src="~/img/spotify-fake.png" alt="Player demonstrativo de podcast" />
+    </div>
+  </section>
+
+  <div id="linhaDivisoria"></div>
+
+  <!-- ========== MEMORIAL NEGRO ========== -->
+  <section id="memorial-negro">
+    <span class="subtitulo">· Patrimônio Cultural ·</span>
+    <h2 class="titulo-secao">memorial <span>negro</span></h2>
+    <p>
+      O Memorial Negro é o espaço onde a história fala por si. Reunimos
+      peças, objetos e documentos históricos que contam a trajetória do povo
+      negro no Brasil — da resistência dos quilombos à riqueza das tradições
+      africanas que cruzaram o oceano e floresceram nesta terra.
+    </p>
+    <p>
+      Cada peça do nosso acervo carrega uma história que merece ser vista,
+      tocada com os olhos e sentida com o coração. O Memorial está aberto
+      para visitas na sede da Negra Visão em Atibaia — venha descobrir, se
+      emocionar e reconhecer a grandeza de uma cultura que jamais se apagou.
+    </p>
+  </section>
+
+  <div id="linhaDivisoria"></div>
+
+  <!-- ========== BIBLIOTECA ========== -->
+  <section id="biblioteca">
+    <span class="subtitulo">· Patrimônio Cultural ·</span>
+    <h2 class="titulo-secao">nossa <span>biblioteca</span></h2>
+    <p>
+      A Negra Visão possui uma biblioteca dedicada à história, à literatura
+      e ao pensamento negro brasileiro e africano. Um acervo construído com
+      cuidado e afeto, reunindo obras que contam histórias que o mundo
+      muitas vezes escolheu não contar.
+    </p>
+    <p>
+      Nossa biblioteca está aberta a toda a comunidade. Você pode visitar,
+      consultar os volumes e, se quiser levar uma obra para casa, o
+      empréstimo é simples e gratuito. Acreditamos que o acesso ao
+      conhecimento é parte fundamental do nosso trabalho, e que cada livro
+      lido é mais uma semente plantada.
+    </p>
+  </section>
+</main>

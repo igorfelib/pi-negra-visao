@@ -1,0 +1,548 @@
+@model AdminPainelViewModel
+@{
+    ViewData["Title"] = "Administração";
+    ViewData["OcultarFooterAlto"] = true;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/admin.js" asp-append-version="true" defer></script>
+}
+
+@section NavItems {
+    <ul>
+      <li><a asp-controller="Home" asp-action="Index">Home Pública</a></li>
+      <li><a href="#gerenciar-responsaveis">Responsáveis</a></li>
+      <li><a href="#gerenciar-eventos">Eventos</a></li>
+      <li><a href="#relatorio-inscricoes">Inscrições</a></li>
+      <li>
+        <a asp-controller="Login" asp-action="Sair" style="color: var(--vermelho); font-weight: 700;">
+          Sair (@Model.UsuarioLogado)
+        </a>
+      </li>
+    </ul>
+}
+
+<main class="container-admin">
+  <h1>Painel de Controle — Negra Visão</h1>
+
+  @if (!string.IsNullOrEmpty(Model.MensagemSucesso))
+  {
+      <div class="alerta-admin alerta-sucesso">
+        <strong>✓ Sucesso:</strong> @Model.MensagemSucesso
+      </div>
+  }
+
+  @if (!string.IsNullOrEmpty(Model.MensagemErro))
+  {
+      <div class="alerta-admin alerta-erro">
+        <strong>! Atenção:</strong> @Model.MensagemErro
+      </div>
+  }
+
+  <!-- ========================================== -->
+  <!-- 1. GERENCIAR RESPONSÁVEIS                  -->
+  <!-- ========================================== -->
+  <section id="gerenciar-responsaveis" class="card-admin">
+    <h2 id="titulo-form-responsavel">1. Cadastrar / Editar Responsável</h2>
+    <form asp-controller="Admin" asp-action="SalvarResponsavel" method="post" id="form-responsavel">
+      @Html.AntiForgeryToken()
+      <input type="hidden" id="resp-id" name="ResponsavelId" />
+
+      <div class="linha-form">
+        <div class="campo-form">
+          <label for="resp-cpf">CPF * (digite para buscar pessoa existente)</label>
+          <input type="text" id="resp-cpf" name="Cpf" placeholder="000.000.000-00" inputmode="numeric" required />
+        </div>
+        <div class="campo-form">
+          <label for="resp-nome">Nome Completo *</label>
+          <input type="text" id="resp-nome" name="Nome" placeholder="Nome completo do responsável" required />
+        </div>
+        <div class="campo-form">
+          <label for="resp-nascimento">Data de Nascimento *</label>
+          <input type="date" id="resp-nascimento" name="DataNascimento" required />
+        </div>
+      </div>
+
+      <div class="linha-form">
+        <div class="campo-form">
+          <label for="resp-telefone">Telefone (DDD + número — opcional)</label>
+          <input type="tel" id="resp-telefone" name="Telefone" placeholder="(11) 90000-0000" />
+        </div>
+        <div class="campo-form">
+          <label for="resp-email">E-mail (opcional)</label>
+          <input type="email" id="resp-email" name="Email" placeholder="responsavel@email.com" />
+        </div>
+        <div class="campo-form">
+          <label for="resp-descricao">Descrição de Atuação (opcional)</label>
+          <input type="text" id="resp-descricao" name="DescricaoAtuacao" placeholder="Ex.: Mestre de Capoeira, Educadora..." />
+        </div>
+      </div>
+
+      <div class="linha-form">
+        <div class="campo-form">
+          <label for="resp-cep">CEP *</label>
+          <input type="text" id="resp-cep" name="Cep" placeholder="00000-000" inputmode="numeric" required />
+          <small id="resp-status-cep" style="margin-top: 0.2rem;"></small>
+        </div>
+        <div class="campo-form">
+          <label for="resp-municipio">Município *</label>
+          <input type="text" id="resp-municipio" name="Municipio" placeholder="Atibaia" required />
+        </div>
+        <div class="campo-form" style="max-width: 8rem;">
+          <label for="resp-uf">UF *</label>
+          <input type="text" id="resp-uf" name="Uf" placeholder="SP" maxlength="2" required />
+        </div>
+      </div>
+
+      <div class="linha-form">
+        <div class="campo-form">
+          <label for="resp-logradouro">Logradouro (Rua/Av.) *</label>
+          <input type="text" id="resp-logradouro" name="Logradouro" placeholder="Rua, Avenida..." required />
+        </div>
+        <div class="campo-form" style="max-width: 12rem;">
+          <label for="resp-numero">Número (ou S/N) *</label>
+          <input type="text" id="resp-numero" name="NumeroImovel" placeholder="Ex.: 100 ou S/N" required />
+        </div>
+        <div class="campo-form">
+          <label for="resp-bairro">Bairro *</label>
+          <input type="text" id="resp-bairro" name="Bairro" placeholder="Bairro" required />
+        </div>
+        <div class="campo-form">
+          <label for="resp-complemento">Complemento (opcional)</label>
+          <input type="text" id="resp-complemento" name="Complemento" placeholder="Opcional" />
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button type="submit" class="btn-salvar" id="btn-salvar-resp">Salvar Responsável</button>
+        <button type="button" class="btn-salvar" id="btn-cancelar-edicao-resp" style="display: none; background-color: var(--marrom);">
+          Cancelar Edição
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 2. RESPONSÁVEIS CADASTRADOS                -->
+  <!-- ========================================== -->
+  <section id="responsaveis-cadastrados" class="card-admin">
+    <h2>2. Responsáveis Cadastrados (@Model.Responsaveis.Count)</h2>
+    <div class="tabela-scroll">
+      <table id="tabela-responsaveis">
+        <thead>
+          <tr>
+            <th>CPF</th>
+            <th>Nome</th>
+            <th>Nascimento</th>
+            <th>Contato</th>
+            <th>Cidade/UF</th>
+            <th>Atuação</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (Model.Responsaveis.Any())
+          {
+              foreach (var r in Model.Responsaveis)
+              {
+                  var p = r.Pessoa;
+                  var end = p?.Endereco;
+                  <tr>
+                    <td>@ValidacaoHelper.FormatarCpf(p?.Cpf)</td>
+                    <td><strong>@p?.Nome</strong></td>
+                    <td>@(p != null ? p.DataNascimento.ToString("dd/MM/yyyy") : "-")</td>
+                    <td>
+                      @(string.IsNullOrEmpty(p?.Telefone) ? "-" : ValidacaoHelper.FormatarTelefone(p.Telefone))<br />
+                      <small>@(p?.Email ?? "")</small>
+                    </td>
+                    <td>@(end != null ? $"{end.Municipio}/{end.Uf}" : "-")</td>
+                    <td>@(r.DescricaoAtuacao ?? "-")</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn-tabela btn-editar btn-editar-resp"
+                        data-id="@r.ResponsavelId"
+                        data-cpf="@p?.Cpf"
+                        data-nome="@p?.Nome"
+                        data-nascimento="@(p != null ? p.DataNascimento.ToString("yyyy-MM-dd") : "")"
+                        data-telefone="@(p?.Telefone ?? "")"
+                        data-email="@(p?.Email ?? "")"
+                        data-descricao="@(r.DescricaoAtuacao ?? "")"
+                        data-cep="@(end?.Cep ?? "")"
+                        data-logradouro="@(end?.Logradouro ?? "")"
+                        data-numero="@(end?.NumeroImovel ?? "")"
+                        data-complemento="@(end?.Complemento ?? "")"
+                        data-bairro="@(end?.Bairro ?? "")"
+                        data-municipio="@(end?.Municipio ?? "")"
+                        data-uf="@(end?.Uf ?? "")">
+                        Editar
+                      </button>
+
+                      @if (!r.EventoResponsaveis.Any())
+                      {
+                          <form asp-controller="Admin" asp-action="ExcluirResponsavel" method="post" style="display: inline;" onsubmit="return confirm('Confirma a exclusão deste responsável?');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@r.ResponsavelId" />
+                            <button type="submit" class="btn-tabela btn-excluir">Excluir</button>
+                          </form>
+                      }
+                    </td>
+                  </tr>
+              }
+          }
+          else
+          {
+              <tr>
+                <td colspan="7" style="text-align: center;">Nenhum responsável cadastrado.</td>
+              </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 3. CADASTRAR / EDITAR EVENTO               -->
+  <!-- ========================================== -->
+  <section id="gerenciar-eventos" class="card-admin">
+    <h2 id="titulo-form-evento">3. Cadastrar / Editar Evento</h2>
+    <form asp-controller="Admin" asp-action="SalvarEvento" method="post" id="form-evento">
+      @Html.AntiForgeryToken()
+      <input type="hidden" id="evento-id" name="EventoId" />
+
+      <div class="linha-form">
+        <div class="campo-form">
+          <label for="evento-titulo">Título do Evento *</label>
+          <input type="text" id="evento-titulo" name="Titulo" placeholder="Ex.: Oficina de Capoeira" required />
+        </div>
+        <div class="campo-form" style="max-width: 15rem;">
+          <label for="evento-tipo">Tipo do Evento *</label>
+          <select id="evento-tipo" name="TipoEvento" required>
+            <option value="CURSO">CURSO</option>
+            <option value="OFICINA">OFICINA</option>
+            <option value="PALESTRA">PALESTRA</option>
+          </select>
+        </div>
+        <div class="campo-form">
+          <label for="evento-responsavel">Responsável *</label>
+          <select id="evento-responsavel" name="ResponsavelId" required>
+            <option value="">Selecione um responsável...</option>
+            @foreach (var r in Model.Responsaveis)
+            {
+                <option value="@r.ResponsavelId">@r.Pessoa?.Nome (@ValidacaoHelper.FormatarCpf(r.Pessoa?.Cpf))</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="linha-form">
+        <div class="campo-form">
+          <label for="evento-local">Local de Realização *</label>
+          <input type="text" id="evento-local" name="Local" placeholder="Ex.: Sede Negra Visão - Atibaia/SP" required />
+        </div>
+        <div class="campo-form">
+          <label for="evento-descricao">Descrição da Atividade *</label>
+          <input type="text" id="evento-descricao" name="Descricao" placeholder="Descreva o objetivo e conteúdo do evento" required />
+        </div>
+      </div>
+
+      <div class="linha-form">
+        <div class="campo-form">
+          <label for="evento-data-primeira">Data da 1ª Ocorrência *</label>
+          <input type="date" id="evento-data-primeira" name="DataPrimeiraOcorrencia" required />
+        </div>
+        <div class="campo-form">
+          <label for="evento-hora-inicio">Horário Início *</label>
+          <input type="time" id="evento-hora-inicio" name="HoraInicio" required />
+        </div>
+        <div class="campo-form">
+          <label for="evento-hora-fim">Horário Fim *</label>
+          <input type="time" id="evento-hora-fim" name="HoraFim" required />
+        </div>
+        <div class="campo-form">
+          <label for="evento-capacidade">Capacidade de Vagas *</label>
+          <input type="number" id="evento-capacidade" name="Capacidade" min="1" value="20" required />
+        </div>
+      </div>
+
+      <div class="linha-form">
+        <div class="campo-form">
+          <label for="evento-classificacao">Classificação (RN01) *</label>
+          <select id="evento-classificacao" name="Classificacao" required>
+            <option value="UNICO">ÚNICO (1 ocorrência)</option>
+            <option value="RECORRENTE">RECORRENTE (2 ou mais ocorrências)</option>
+          </select>
+        </div>
+        <div class="campo-form">
+          <label for="evento-frequencia">Frequência (RN03)</label>
+          <select id="evento-frequencia" name="Frequencia" disabled>
+            <option value="">Não se aplica (Evento Único)</option>
+            <option value="DIARIA">DIÁRIA</option>
+            <option value="SEMANAL">SEMANAL</option>
+            <option value="QUINZENAL">QUINZENAL</option>
+            <option value="MENSAL">MENSAL</option>
+          </select>
+        </div>
+        <div class="campo-form">
+          <label for="evento-modalidade">Modalidade de Duração (RN04)</label>
+          <select id="evento-modalidade" name="ModalidadeDuracao" disabled>
+            <option value="">Não se aplica (Evento Único)</option>
+            <option value="QUANTIDADE_OCORRENCIAS">Por Quantidade de Ocorrências</option>
+            <option value="DATA_FINAL">Até uma Data Final</option>
+            <option value="SEM_PREVISAO_DE_FIM">Sem Previsão de Fim (Contínuo)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="linha-form">
+        <div class="campo-form">
+          <label for="evento-qtd-ocorrencias">Qtd. Total de Ocorrências (mín. 2)</label>
+          <input type="number" id="evento-qtd-ocorrencias" name="QuantidadeTotalOcorrencias" min="2" disabled />
+        </div>
+        <div class="campo-form">
+          <label for="evento-data-final">Data Final da Série</label>
+          <input type="date" id="evento-data-final" name="DataFinal" disabled />
+        </div>
+        <div class="campo-form">
+          <label for="evento-limite-faltas">Limite de Faltas Consecutivas (RN48)</label>
+          <input type="number" id="evento-limite-faltas" name="LimiteFaltasConsecutivas" min="1" placeholder="Ex.: 3" disabled />
+        </div>
+      </div>
+
+      <div class="linha-form">
+        <div class="campo-form">
+          <label for="evento-abertura-insc">Abertura das Inscrições (RN16) *</label>
+          <input type="datetime-local" id="evento-abertura-insc" name="DataHoraAberturaInscricao" required />
+        </div>
+        <div class="campo-form">
+          <label for="evento-encerramento-insc">Encerramento das Inscrições (opcional apenas em contínuo)</label>
+          <input type="datetime-local" id="evento-encerramento-insc" name="DataHoraEncerramentoInscricao" />
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button type="submit" class="btn-salvar" id="btn-salvar-evento">Salvar Evento</button>
+        <button type="button" class="btn-salvar" id="btn-cancelar-edicao-evento" style="display: none; background-color: var(--marrom);">
+          Cancelar Edição
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 4. EVENTOS CADASTRADOS                     -->
+  <!-- ========================================== -->
+  <section id="eventos-cadastrados" class="card-admin">
+    <h2>4. Eventos Cadastrados (@Model.Eventos.Count)</h2>
+    <div class="tabela-scroll">
+      <table id="tabela-eventos">
+        <thead>
+          <tr>
+            <th>Evento / Local</th>
+            <th>Responsável</th>
+            <th>1ª Ocorrência</th>
+            <th>Recorrência</th>
+            <th>Vagas</th>
+            <th>Estado / Visibilidade</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (Model.Eventos.Any())
+          {
+              foreach (var ev in Model.Eventos)
+              {
+                  var respVinculo = ev.EventoResponsaveis.FirstOrDefault();
+                  var nomeResp = respVinculo?.Responsavel?.Pessoa?.Nome ?? "Não informado";
+                  var respId = respVinculo?.ResponsavelId ?? 0;
+                  var primeiraOc = ev.Ocorrencias.OrderBy(o => o.DataHoraInicio).FirstOrDefault();
+                  var inscConfirmadas = ev.Inscricoes.Count(i => i.Estado == "CONFIRMADA" && (i.Pessoa == null || i.Pessoa.Situacao == "ATIVA"));
+
+                  <tr>
+                    <td>
+                      <strong>@ev.Titulo</strong>
+                      <span class="badge-admin">@ev.TipoEvento</span><br />
+                      <small>@ev.Local</small>
+                    </td>
+                    <td>@nomeResp</td>
+                    <td>
+                      @if (primeiraOc != null)
+                      {
+                          <span>@primeiraOc.DataHoraInicio.ToString("dd/MM/yyyy")</span><br />
+                          <small>@primeiraOc.DataHoraInicio.ToString("HH:mm") às @primeiraOc.DataHoraFim.ToString("HH:mm") (@ev.Ocorrencias.Count encontros)</small>
+                      }
+                      else
+                      {
+                          <span>-</span>
+                      }
+                    </td>
+                    <td>
+                      @ev.Classificacao
+                      @if (!string.IsNullOrEmpty(ev.Frequencia))
+                      {
+                          <br /><small>@ev.Frequencia (@ev.ModalidadeDuracao)</small>
+                      }
+                    </td>
+                    <td>@inscConfirmadas / @ev.Capacidade</td>
+                    <td>
+                      <span class="badge-admin @(ev.EstadoEvento == "CANCELADO" ? "badge-erro" : "badge-info")">@ev.EstadoEvento</span>
+                      <span class="badge-admin @(ev.Visibilidade == "PUBLICADO" ? "badge-sucesso" : "badge-neutro")">@ev.Visibilidade</span>
+                      @if (!string.IsNullOrEmpty(ev.MotivoCancelamento))
+                      {
+                          <br /><small style="color: var(--vermelho);">Motivo: @ev.MotivoCancelamento</small>
+                      }
+                    </td>
+                    <td>
+                      @if (ev.EstadoEvento == "PROGRAMADO")
+                      {
+                          <button
+                            type="button"
+                            class="btn-tabela btn-editar btn-editar-evento"
+                            data-id="@ev.EventoId"
+                            data-titulo="@ev.Titulo"
+                            data-tipo="@ev.TipoEvento"
+                            data-responsavel="@respId"
+                            data-local="@ev.Local"
+                            data-descricao="@ev.Descricao"
+                            data-data-primeira="@(primeiraOc != null ? primeiraOc.DataHoraInicio.ToString("yyyy-MM-dd") : "")"
+                            data-hora-inicio="@(primeiraOc != null ? primeiraOc.DataHoraInicio.ToString("HH:mm") : "")"
+                            data-hora-fim="@(primeiraOc != null ? primeiraOc.DataHoraFim.ToString("HH:mm") : "")"
+                            data-capacidade="@ev.Capacidade"
+                            data-classificacao="@ev.Classificacao"
+                            data-frequencia="@(ev.Frequencia ?? "")"
+                            data-modalidade="@(ev.ModalidadeDuracao ?? "")"
+                            data-qtd-ocorrencias="@(ev.QuantidadeTotalOcorrencias?.ToString() ?? "")"
+                            data-data-final="@(ev.DataFinal.HasValue ? ev.DataFinal.Value.ToString("yyyy-MM-dd") : "")"
+                            data-limite-faltas="@(ev.LimiteFaltasConsecutivas?.ToString() ?? "")"
+                            data-abertura="@ev.DataHoraAberturaInscricao.ToString("yyyy-MM-ddTHH:mm")"
+                            data-encerramento="@(ev.DataHoraEncerramentoInscricao.HasValue ? ev.DataHoraEncerramentoInscricao.Value.ToString("yyyy-MM-ddTHH:mm") : "")">
+                            Editar
+                          </button>
+
+                          <form asp-controller="Admin" asp-action="AlternarVisibilidadeEvento" method="post" style="display: inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@ev.EventoId" />
+                            <button type="submit" class="btn-tabela" style="background-color: var(--azul);">
+                              @(ev.Visibilidade == "PUBLICADO" ? "Ocultar" : "Publicar")
+                            </button>
+                          </form>
+
+                          <form asp-controller="Admin" asp-action="CancelarEvento" method="post" style="display: inline;" class="form-cancelar-evento">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@ev.EventoId" />
+                            <input type="hidden" name="motivo" value="" />
+                            <button type="button" class="btn-tabela btn-excluir btn-acionar-cancelamento-evento">
+                              Cancelar
+                            </button>
+                          </form>
+                      }
+
+                      @if (!ev.Inscricoes.Any())
+                      {
+                          <form asp-controller="Admin" asp-action="ExcluirEvento" method="post" style="display: inline;" onsubmit="return confirm('Excluir definitivamente este evento sem inscritos?');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@ev.EventoId" />
+                            <button type="submit" class="btn-tabela btn-excluir">Excluir</button>
+                          </form>
+                      }
+                    </td>
+                  </tr>
+              }
+          }
+          else
+          {
+              <tr>
+                <td colspan="7" style="text-align: center;">Nenhum evento cadastrado.</td>
+              </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 5. RELATÓRIO E GESTÃO DE INSCRIÇÕES        -->
+  <!-- ========================================== -->
+  <section id="relatorio-inscricoes" class="card-admin">
+    <h2>5. Relatório e Gestão de Inscrições (@Model.Inscricoes.Count)</h2>
+    <div class="tabela-scroll">
+      <table id="tabela-alunos">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>CPF</th>
+            <th>Participante</th>
+            <th>Contato</th>
+            <th>Evento</th>
+            <th>Situação</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (Model.Inscricoes.Any())
+          {
+              foreach (var insc in Model.Inscricoes)
+              {
+                  <tr>
+                    <td><strong>@insc.CodigoInscricao</strong></td>
+                    <td>@ValidacaoHelper.FormatarCpf(insc.Pessoa?.Cpf)</td>
+                    <td>@insc.Pessoa?.Nome</td>
+                    <td>
+                      @(string.IsNullOrEmpty(insc.Pessoa?.Telefone) ? "-" : ValidacaoHelper.FormatarTelefone(insc.Pessoa.Telefone))<br />
+                      <small>@(insc.Pessoa?.Email ?? "")</small>
+                    </td>
+                    <td><strong>@insc.Evento?.Titulo</strong></td>
+                    <td>
+                      <span class="badge-admin @(insc.Estado == "CONFIRMADA" ? "badge-sucesso" : "badge-erro")">
+                        @insc.Estado
+                      </span>
+                      @if (!string.IsNullOrEmpty(insc.MotivoCancelamento))
+                      {
+                          <br /><small>Motivo: @insc.MotivoCancelamento</small>
+                      }
+                    </td>
+                    <td>
+                      @if (insc.Estado == "CONFIRMADA")
+                      {
+                          <form asp-controller="Admin" asp-action="CancelarInscricao" method="post" style="display: inline;" class="form-cancelar-inscricao">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@insc.InscricaoId" />
+                            <input type="hidden" name="motivo" value="" />
+                            <button type="button" class="btn-tabela btn-excluir btn-acionar-cancelamento-inscricao">
+                              Cancelar a pedido
+                            </button>
+                          </form>
+                      }
+                      else if (insc.Estado is "CANCELADA_A_PEDIDO" or "ENCERRADA_POR_FALTAS")
+                      {
+                          <form asp-controller="Admin" asp-action="ReativarInscricao" method="post" style="display: inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@insc.InscricaoId" />
+                            <button type="submit" class="btn-tabela" style="background-color: var(--verde);">
+                              Reativar Inscrição
+                            </button>
+                          </form>
+                      }
+                      else
+                      {
+                          <small>Sem ação disponível</small>
+                      }
+                    </td>
+                  </tr>
+              }
+          }
+          else
+          {
+              <tr>
+                <td colspan="7" style="text-align: center;">Nenhuma inscrição registrada no banco até o momento.</td>
+              </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>

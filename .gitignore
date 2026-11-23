@@ -1,2 +1,6 @@
 # arquivos para serem ignorados
 /work
+.vs/
+**/bin/
+**/obj/
+*.user

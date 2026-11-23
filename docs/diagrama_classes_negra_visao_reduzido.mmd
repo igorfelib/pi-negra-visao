@@ -1,0 +1,74 @@
+classDiagram
+    direction TB
+
+    class Pessoa {
+        + PessoaId : int
+        + Nome : string
+        + Cpf : string
+        + DataNascimento : DateTime
+        + Email : string
+        + Telefone : string
+        + Situacao : string
+    }
+
+    class Papel {
+        + PapelId : int
+        + NomePapel : string
+    }
+
+    class PessoaPapel {
+        + PessoaId : int
+        + PapelId : int
+    }
+
+    class UsuarioInterno {
+        + UsuarioInternoId : int
+        + PessoaId : int
+        + Login : string
+        + Senha : string
+        + SituacaoAcesso : string
+    }
+
+    class Responsavel {
+        + ResponsavelId : int
+        + PessoaId : int
+        + DescricaoAtuacao : string
+    }
+
+    class Evento {
+        + EventoId : int
+        + Titulo : string
+        + Descricao : string
+        + TipoEvento : string
+        + Local : string
+        + Classificacao : string
+        + Frequencia : string
+        + ModalidadeDuracao : string
+        + QuantidadeTotalOcorrencias : uint
+        + DataFinal : DateTime
+        + Capacidade : uint
+        + DataHoraAberturaInscricao : DateTime
+        + DataHoraEncerramentoInscricao : DateTime
+        + LimiteFaltasConsecutivas : uint
+        + EstadoEvento : string
+        + Visibilidade : string
+        + MotivoCancelamento : string
+    }
+
+    class Inscricao {
+        + InscricaoId : int
+        + PessoaId : int
+        + EventoId : int
+        + CodigoInscricao : string
+        + Estado : string
+        + MotivoCancelamento : string
+        + FaltasConsecutivas : uint
+    }
+
+    Pessoa "1" -- "0..1" UsuarioInterno : possui acesso
+    Pessoa "1" -- "0..1" Responsavel : possui cadastro
+    Pessoa "1" -- "0..*" PessoaPapel : recebe
+    Papel "1" -- "0..*" PessoaPapel : classifica
+    Pessoa "1" -- "0..*" Inscricao : realiza
+    Evento "1" -- "0..*" Inscricao : recebe
+    Evento "0..*" -- "0..*" Responsavel : possui responsáveis

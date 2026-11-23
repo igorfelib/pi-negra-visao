@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+}
+
+<main>
+  <section id="secao-login">
+    <h1 class="titulo-formulario">Login</h1>
+    <p class="subtitulo-formulario">Faça login para acessar o painel interno da associação</p>
+
+    <div class="card-formulario">
+      @if (ViewBag.Erro != null)
+      {
+          <div style="margin-bottom: 1rem; padding: 0.85rem 1rem; background: #fde8e8; border-left: 4px solid var(--vermelho); color: var(--vermelho); font-weight: 700;">
+              @ViewBag.Erro
+          </div>
+      }
+
+      <form asp-controller="Login" asp-action="Entrar" method="post" id="login-formulario">
+        @Html.AntiForgeryToken()
+        <div class="form-bloco">
+          <div class="campo-formulario">
+            <label for="usuario">USUÁRIO *</label>
+            <input
+              type="text"
+              id="usuario"
+              class="obrigatorio"
+              name="usuario"
+              placeholder="Digite seu login (ex: admin)"
+              autocomplete="username"
+              required
+            />
+            <p class="mensagem-erro"></p>
+          </div>
+          <div class="campo-formulario">
+            <label for="senha">SENHA *</label>
+            <input
+              type="password"
+              id="senha"
+              class="obrigatorio"
+              name="senha"
+              placeholder="Digite sua senha"
+              autocomplete="current-password"
+              required
+            />
+            <p class="mensagem-erro"></p>
+          </div>
+        </div>
+
+        <div class="campo-formulario">
+          <button type="submit" id="buttonEntrar">ENTRAR NO PAINEL</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>

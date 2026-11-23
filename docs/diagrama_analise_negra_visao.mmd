@@ -1,0 +1,73 @@
+classDiagram
+    direction TB
+
+    class Pessoa["Pessoa"] {
+        -nome : String
+        -cpf : String
+        -dataNascimento : Date
+        -email : String
+        -telefone : String
+        -endereco : String
+        -situacao : String
+    }
+
+    class Evento["Evento"] {
+        -titulo : String
+        -descricao : String
+        -tipo : String
+        -local : String
+        -classificacao : String
+        -frequencia : String
+        -capacidade : int
+        -aberturaInscricoes : DateTime
+        -encerramentoInscricoes : DateTime
+        -estado : String
+        -visibilidade : String
+    }
+
+    class Responsavel["Responsável"] {
+        -descricaoAtuacao : String
+    }
+
+    class UsuarioInterno["Usuário interno"] {
+        -login : String
+        -senha : String
+        -perfil : String
+        -situacaoAcesso : String
+    }
+
+    class Inscricao["Inscrição"] {
+        -codigo : String
+        -estado : String
+        -motivoCancelamento : String
+        -faltasConsecutivas : int
+    }
+
+    class Ocorrencia["Ocorrência"] {
+        -inicio : DateTime
+        -fim : DateTime
+        -cancelada : boolean
+        -listaPresencaFinalizada : boolean
+    }
+
+    class Relatorio["Relatório"] {
+        -tipo : String
+        -inicioPeriodo : Date
+        -fimPeriodo : Date
+        -dataGeracao : DateTime
+        -formato : String
+    }
+
+    class Presenca["Presença"] {
+        -situacao : String
+    }
+
+    Pessoa "1" -- "0..1" UsuarioInterno : possui acesso
+    Pessoa "1" -- "0..1" Responsavel : possui cadastro
+    Pessoa "1" -- "0..*" Inscricao : realiza
+    Evento "0..*" -- "1..*" Responsavel : tem responsáveis
+    Evento "1" -- "0..*" Inscricao : recebe
+    Evento "1" -- "1..*" Ocorrencia : possui
+    Inscricao "1" -- "0..*" Presenca : registra
+    Ocorrencia "1" -- "0..*" Presenca : possui registros
+    UsuarioInterno ..> Relatorio : gera [administrador]
